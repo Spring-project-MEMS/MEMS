@@ -12,6 +12,8 @@ public class Constants {
     public static final String POST_CONTENT_LENGTH = "Content should be between 8 and 2000 symbols";
 
     public static final String CATEGORY_NAME_LENGTH = "Category name should be between 3 and 20 symbols";
+    public static final String WARD_NAME_LENGTH = "Ward name should be between 1 and 50 symbols";
+    public static final String ROOM_NUMBER_LENGTH = "Room number should be between 1 and 30 symbols";
 
     public static final String COMMENT_LENGTH = "Comment length should be between 3 and 1000 symbols";
 }

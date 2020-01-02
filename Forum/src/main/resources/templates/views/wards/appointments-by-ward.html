@@ -1,0 +1,14 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml" class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-8" th:object="${viewModel}">
+            <h4 th:text="|Appointments in Ward *{wardName}:|"></h4>
+            <hr>
+            <th:block>
+                <div class="bg-white mb-3 p-3 row">
+                    <p>MAKE CALENDAR TO VISUALISE AND CHOOSE APPOINTMENTS</p>
+                </div>
+            </th:block>
+        </div>
+        <th:block th:include="~{fragments/sidebar-wards}"/>
+    </div>
+</div>
