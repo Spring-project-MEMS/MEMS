@@ -22,6 +22,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(this.dynamicContentLoader);
-        registry.addInterceptor(loggerInterceptor).addPathPatterns("/posts/create", "/categories/create");
+        registry.addInterceptor(loggerInterceptor).addPathPatterns("/wards/create");
     }
 }

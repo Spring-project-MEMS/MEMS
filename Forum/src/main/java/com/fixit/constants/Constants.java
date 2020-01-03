@@ -16,4 +16,9 @@ public class Constants {
     public static final String ROOM_NUMBER_LENGTH = "Room number should be between 1 and 30 symbols";
 
     public static final String COMMENT_LENGTH = "Comment length should be between 3 and 1000 symbols";
+
+    public static final String FIRST_NAME_LENGTH = "First name should be between 0 and 50 symbols";
+    public static final String LAST_NAME_LENGTH = "First name should be between 0 and 50 symbols";
+    public static final String EGN_LENGTH = "EGN should be between 0 and 20 symbols";
+
 }

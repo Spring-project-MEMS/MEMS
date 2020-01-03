@@ -4,7 +4,7 @@ import com.fixit.cache.DataWardCacheSingleton;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import com.fixit.cache.DataCacheSingleton;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,7 +18,6 @@ public class DynamicContentLoader extends HandlerInterceptorAdapter {
             return;
         }
 
-        modelAndView.addObject("categoryNames", DataCacheSingleton.getInstance().getCategories());
         modelAndView.addObject("wardNames", DataWardCacheSingleton.getInstance().getWards());
     }
 }

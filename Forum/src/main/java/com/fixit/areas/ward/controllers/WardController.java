@@ -6,7 +6,6 @@ import com.fixit.areas.ward.models.service.WardServiceModel;
 import com.fixit.areas.ward.models.view.WardNamesViewModel;
 import com.fixit.areas.ward.models.view.WardViewModel;
 import com.fixit.areas.ward.services.WardService;
-import com.fixit.cache.DataCacheSingleton;
 import com.fixit.cache.DataWardCacheSingleton;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
