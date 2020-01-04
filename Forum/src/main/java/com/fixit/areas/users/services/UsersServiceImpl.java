@@ -60,7 +60,7 @@ public class UsersServiceImpl implements UsersService {
 
         userEntity.addRole(role);
 
-        if(userServiceModel.getWardName() == null || !this.wardService.findAll().stream().map(w->w.getWardName()).anyMatch(s -> s.equals(userServiceModel.getWardName()))){
+        if(userServiceModel.getWardName() == null){
             userEntity.setWard(null);
         }
         else
