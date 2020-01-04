@@ -19,9 +19,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.util.DateUtils;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -88,7 +91,7 @@ public class WardController extends BaseController {
     }
 
     @PostMapping("/{wardName}")
-    public ModelAndView storeAppointment(@Valid @ModelAttribute AppointmentBindingModel appointmentBindingModel, BindingResult bindingResult, Authentication authentication,
+    public ModelAndView storeAppointment(@ModelAttribute AppointmentBindingModel appointmentBindingModel, BindingResult bindingResult, Authentication authentication,
                                          @PathVariable(value = "wardName", required = true) String wardName){
         if (bindingResult.hasErrors()){
 
@@ -105,7 +108,20 @@ public class WardController extends BaseController {
             */
         }
 
-        this.wardService.makeAppointment(appointmentBindingModel.getDate(), wardName, authentication);
+        // TODO:
+        // problem with parsing the data from template to BE fields
+        // PROBABLY NEED TO CHANGE THE ENTITY TO HAVE TWO STRING FIELDS FOR DATE AND TIME
+        // DOES NOT WORK NOW
+
+        String date = appointmentBindingModel.getDate();
+        String time = appointmentBindingModel.getTime();
+
+        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder localDateTimeString = stringBuilder.append(date).append("T").append(time);
+
+        LocalDateTime localDateTime = LocalDateTime.parse(localDateTimeString.toString());
+
+        //this.wardService.makeAppointment(localDateTime., wardName, authentication);
         return super.redirect("/wards/" + wardName);
     }
 }

@@ -1,7 +1,7 @@
 <div xmlns:th="http://www.w3.org/1999/xhtml" class="container">
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-8" th:object="${viewModel}">
-            <h4 th:text="|Appointments in Ward *{wardName}:|"></h4>
+            <h4 th:text="|Appointments in Ward ${viewModel.wardName}:|"></h4>
             <hr>
 
             <th:block th:if="*{#sets.isEmpty(appointments)}">
@@ -18,41 +18,15 @@
                 </th:block>
             </th:block>
 
-            <button class="btn m-1 btn-danger text-center" data-toggle="modal" data-target="#makeModal">
-                MakeAppointment
-            </button>
-
+            <div class="bg-white mb-3 p-3 row">
+                <p>TEST</p>
+                <button data-toggle="modal" data-target="#makeAppointmentModal" class="btn m-1 text-white bg-primary text-center"> Make Appointment </button>
+            </div>
         </div>
         <th:block th:include="~{fragments/sidebar-wards}"/>
     </div>
 
-    <div class="modal fade" id="makeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Make Appointment</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form method="post" th:action="@{/wards/{wardName}(wardName=${viewModel.wardName})}">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="makeAppointmentDateInput">Choose date:</label>
-                            <input name="date" type="date" class="form-control" id="makeAppointmentDateInput"
-                                   th:value="${viewModel.date}">
-                            <div class="text-danger" id="makeAppointmentHint"></div>
-                        </div>
-                    </div>
-
-                    <input type="hidden" name="wardName" th:value="${viewModel.id}"/>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" id="makeAppointmentButton" class="btn text-white bg-primary">Make appointment</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    <!-- MAKE APPOINTMENT MODAL -->
+    <th:block th:include="~{fragments/wards/make-appointment-modal}"/>
 
 </div>
