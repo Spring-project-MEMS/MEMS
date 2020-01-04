@@ -3,6 +3,7 @@ package com.fixit.areas.users.models.binding;
 import com.fixit.areas.users.models.binding.validations.IsEmailRegistered;
 import com.fixit.areas.users.models.binding.validations.IsPasswordMatching;
 import com.fixit.areas.users.models.binding.validations.IsUsernameTaken;
+import com.fixit.areas.users.models.binding.validations.IsWardPresent;
 import com.fixit.constants.Constants;
 
 import javax.validation.constraints.Email;
@@ -33,6 +34,7 @@ public class UsersRegisterBindingModel {
     private String egn;
 
     private String roleName;
+    @IsWardPresent
     private String wardName;
 
     public UsersRegisterBindingModel() {
