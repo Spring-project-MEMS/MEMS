@@ -42,27 +42,67 @@ public class UsersController extends BaseController {
         }
 
         UsersServiceModel userServiceModel = this.modelMapper.map(usersRegisterBindingModel, UsersServiceModel.class);
-        //what will happen with role
+        userServiceModel.setRoleName("PATIENT");
         this.usersService.createUser(userServiceModel);
         return super.redirect("/login");
     }
 
-    @GetMapping("/users/create")
-    public ModelAndView createUser(@ModelAttribute UsersRegisterBindingModel usersRegisterBindingModel) {
-        return super.view("views/user/create-user", "Create User");
+    @GetMapping("/users/createpatient")
+    public ModelAndView createPatient(@ModelAttribute UsersRegisterBindingModel usersRegisterBindingModel) {
+        return super.view("views/user/create-patient", "Create Patient");
     }
 
-    @PostMapping("/users/create")
-    public ModelAndView createUserConfirm(@Valid @ModelAttribute UsersRegisterBindingModel usersRegisterBindingModel,
-                                        BindingResult bindingResult,
-                                        HttpServletRequest request) {
+    @PostMapping("/users/createpatient")
+    public ModelAndView createPatientConfirm(@Valid @ModelAttribute UsersRegisterBindingModel usersRegisterBindingModel,
+                                          BindingResult bindingResult,
+                                          HttpServletRequest request) {
 
         if (bindingResult.hasErrors()) {
-            return super.view("views/user/create-user", "Create User");
+            return super.view("views/user/create-patient", "Create Patient");
         }
 
         UsersServiceModel userServiceModel = this.modelMapper.map(usersRegisterBindingModel, UsersServiceModel.class);
-        //what will happen with role
+        userServiceModel.setRoleName("PATIENT");
+        this.usersService.createUser(userServiceModel);
+        return super.redirect("/");
+    }
+
+    @GetMapping("/users/createdoctor")
+    public ModelAndView createDoctor(@ModelAttribute UsersRegisterBindingModel usersRegisterBindingModel) {
+        return super.view("views/user/create-doctor", "Create Doctor");
+    }
+
+    @PostMapping("/users/createdoctor")
+    public ModelAndView createDoctorConfirm(@Valid @ModelAttribute UsersRegisterBindingModel usersRegisterBindingModel,
+                                             BindingResult bindingResult,
+                                             HttpServletRequest request) {
+
+        if (bindingResult.hasErrors()) {
+            return super.view("views/user/create-doctor", "Create Doctor");
+        }
+
+        UsersServiceModel userServiceModel = this.modelMapper.map(usersRegisterBindingModel, UsersServiceModel.class);
+        userServiceModel.setRoleName("DOCTOR");
+        this.usersService.createUser(userServiceModel);
+        return super.redirect("/");
+    }
+
+    @GetMapping("/users/createadmin")
+    public ModelAndView createAdmin(@ModelAttribute UsersRegisterBindingModel usersRegisterBindingModel) {
+        return super.view("views/user/create-admin", "Create Admin");
+    }
+
+    @PostMapping("/users/createadmin")
+    public ModelAndView createAdminConfirm(@Valid @ModelAttribute UsersRegisterBindingModel usersRegisterBindingModel,
+                                            BindingResult bindingResult,
+                                            HttpServletRequest request) {
+
+        if (bindingResult.hasErrors()) {
+            return super.view("views/user/create-admin", "Create Admin");
+        }
+
+        UsersServiceModel userServiceModel = this.modelMapper.map(usersRegisterBindingModel, UsersServiceModel.class);
+        userServiceModel.setRoleName("ADMIN");
         this.usersService.createUser(userServiceModel);
         return super.redirect("/");
     }

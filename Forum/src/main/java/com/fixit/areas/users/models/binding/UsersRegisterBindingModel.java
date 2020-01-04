@@ -32,13 +32,10 @@ public class UsersRegisterBindingModel {
     @Size(max = 20, message = Constants.EGN_LENGTH)
     private String egn;
 
-    private boolean admin;
-    private boolean doctor;
+    private String roleName;
     private String wardName;
 
     public UsersRegisterBindingModel() {
-        doctor = false;
-        admin = false;
     }
 
     public String getUsername() {
@@ -97,20 +94,12 @@ public class UsersRegisterBindingModel {
         this.egn = egn;
     }
 
-    public boolean isAdmin() {
-        return admin;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
-
-    public boolean isDoctor() {
-        return doctor;
-    }
-
-    public void setDoctor(boolean doctor) {
-        this.doctor = doctor;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     public String getWardName() {
