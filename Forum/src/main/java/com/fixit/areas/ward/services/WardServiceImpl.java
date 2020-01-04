@@ -1,12 +1,16 @@
 package com.fixit.areas.ward.services;
 
+import com.fixit.areas.appointments.models.service.AppointmentServiceModel;
+import com.fixit.areas.appointments.services.AppointmentService;
 import com.fixit.areas.ward.entities.Ward;
 import com.fixit.areas.ward.models.service.WardServiceModel;
 import com.fixit.areas.ward.repository.WardRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,12 +19,15 @@ public class WardServiceImpl implements WardService{
 
     private final WardRepository wardRepository;
 
+    private final AppointmentService appointmentService;
+
     private final ModelMapper modelMapper;
 
     @Autowired
-    public WardServiceImpl(WardRepository wardRepository, ModelMapper modelMapper) {
+    public WardServiceImpl(WardRepository wardRepository, AppointmentService appointmentService, ModelMapper modelMapper) {
 
         this.wardRepository = wardRepository;
+        this.appointmentService = appointmentService;
         this.modelMapper = modelMapper;
     }
 
@@ -65,5 +72,23 @@ public class WardServiceImpl implements WardService{
         WardServiceModel wardServiceModel = this.modelMapper.map(ward, WardServiceModel.class);
 
         return wardServiceModel;
+    }
+
+    @Override
+    public void makeAppointment(Date date, String wardName, Authentication authentication) {
+
+        AppointmentServiceModel appointmentServiceModel = new AppointmentServiceModel();
+        appointmentServiceModel.setDate(date);
+        WardServiceModel wardServiceModel = this.findByWardName(wardName);
+        appointmentServiceModel.setWard(wardServiceModel);
+
+        // TODO:
+        // add this field once the user models are ready
+        /*
+        UsersServiceModel usersServiceModel = this.usersService.findByUsername(authentication.getName());
+        appointmentServiceModel.setUser(usersServiceModel);
+        */
+
+        this.appointmentService.create(appointmentServiceModel);
     }
 }

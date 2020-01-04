@@ -1,16 +1,21 @@
 package com.fixit.areas.ward.models.service;
 
+import com.fixit.areas.appointments.models.service.AppointmentServiceModel;
+
+import java.util.Set;
+
 public class WardServiceModel {
 
     private Long id;
     private String wardName;
     private String roomNumber;
 
+    private Set<AppointmentServiceModel> appointments;
+
     // TODO:
     // will add these sets once the service models are done
     /*
     private Set<UserServiceModel> doctors;
-    private Set<AppointmentServiceModel> appointments;
     private Set<ExaminationServiceModel> examinations;
     private Set<ResultServiceModel> results;
     */
@@ -40,5 +45,13 @@ public class WardServiceModel {
 
     public void setRoomNumber(String roomNumber) {
         this.roomNumber = roomNumber;
+    }
+
+    public Set<AppointmentServiceModel> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(Set<AppointmentServiceModel> appointments) {
+        this.appointments = appointments;
     }
 }

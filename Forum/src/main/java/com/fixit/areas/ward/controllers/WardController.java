@@ -1,6 +1,11 @@
 package com.fixit.areas.ward.controllers;
 
 import com.fixit.abstractions.controller.BaseController;
+import com.fixit.areas.appointments.models.binding.AppointmentBindingModel;
+import com.fixit.areas.appointments.models.service.AppointmentServiceModel;
+import com.fixit.areas.appointments.services.AppointmentService;
+import com.fixit.areas.users.models.service.UsersServiceModel;
+import com.fixit.areas.users.services.UsersService;
 import com.fixit.areas.ward.models.binding.WardBindingModel;
 import com.fixit.areas.ward.models.service.WardServiceModel;
 import com.fixit.areas.ward.models.view.WardNamesViewModel;
@@ -9,6 +14,7 @@ import com.fixit.areas.ward.services.WardService;
 import com.fixit.cache.DataWardCacheSingleton;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +29,19 @@ import java.util.TreeSet;
 @RequestMapping("/wards")
 public class WardController extends BaseController {
 
-    private WardService wardService;
+    private final WardService wardService;
+
+    private final AppointmentService appointmentService;
 
     private ModelMapper modelMapper;
 
+    private UsersService usersService;
+
     @Autowired
-    public WardController(WardService wardService, ModelMapper modelMapper) {
+    public WardController(WardService wardService, AppointmentService appointmentService, UsersService usersService, ModelMapper modelMapper) {
         this.wardService = wardService;
+        this.appointmentService = appointmentService;
+        this.usersService = usersService;
         this.modelMapper = modelMapper;
     }
 
@@ -67,9 +79,33 @@ public class WardController extends BaseController {
     }
 
     @GetMapping("/{wardName}")
-    public ModelAndView getAppointmentsByWard(@PathVariable String wardName){
+    public ModelAndView getAppointmentsByWard(@PathVariable String wardName, @ModelAttribute AppointmentBindingModel appointmentBindingModel){
 
         WardServiceModel wardServiceModel = this.wardService.findByWardName(wardName);
-        return super.view("views/wards/appointments-by-ward", wardServiceModel);
+        WardViewModel wardViewModel = this.modelMapper.map(wardServiceModel, WardViewModel.class);
+
+        return super.view("views/wards/appointments-by-ward", wardViewModel);
+    }
+
+    @PostMapping("/{wardName}")
+    public ModelAndView storeAppointment(@Valid @ModelAttribute AppointmentBindingModel appointmentBindingModel, BindingResult bindingResult, Authentication authentication,
+                                         @PathVariable(value = "wardName", required = true) String wardName){
+        if (bindingResult.hasErrors()){
+
+            //TODO:
+            // make this one smarter (if there are any errors)
+            // can make field wardViewModel, which to sent to the template (initialize it in the @GetMapping method)
+
+            return super.redirect("/wards/" + wardName);
+
+            /*
+            WardServiceModel wardServiceModel = this.wardService.findByWardName(wardName);
+            WardViewModel wardViewModel = this.modelMapper.map(wardServiceModel, WardViewModel.class);
+            return super.view("views/wards/appointments-by-ward", wardViewModel);
+            */
+        }
+
+        this.wardService.makeAppointment(appointmentBindingModel.getDate(), wardName, authentication);
+        return super.redirect("/wards/" + wardName);
     }
 }
