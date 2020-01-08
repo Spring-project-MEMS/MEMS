@@ -1,6 +1,7 @@
 package com.fixit.areas.ward.services;
 
 import com.fixit.areas.appointments.models.binding.AppointmentBindingModel;
+import com.fixit.areas.ward.models.service.WardFreeAppointmentsServiceModel;
 import com.fixit.areas.ward.models.service.WardServiceModel;
 import org.springframework.security.core.Authentication;
 
@@ -12,6 +13,8 @@ public interface WardService {
     void create(WardServiceModel wardServiceModel);
 
     WardServiceModel findByWardName(String wardName);
+
+    WardFreeAppointmentsServiceModel findByAppointmentDate(String wardName, String date);
 
     Set<WardServiceModel> findAll();
 

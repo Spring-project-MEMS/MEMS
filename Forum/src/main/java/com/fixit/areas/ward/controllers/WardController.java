@@ -7,7 +7,9 @@ import com.fixit.areas.appointments.services.AppointmentService;
 import com.fixit.areas.users.models.service.UsersServiceModel;
 import com.fixit.areas.users.services.UsersService;
 import com.fixit.areas.ward.models.binding.WardBindingModel;
+import com.fixit.areas.ward.models.service.WardFreeAppointmentsServiceModel;
 import com.fixit.areas.ward.models.service.WardServiceModel;
+import com.fixit.areas.ward.models.view.WardFreeAppointmentsViewModel;
 import com.fixit.areas.ward.models.view.WardNamesViewModel;
 import com.fixit.areas.ward.models.view.WardViewModel;
 import com.fixit.areas.ward.services.WardService;
@@ -36,9 +38,9 @@ public class WardController extends BaseController {
 
     private final AppointmentService appointmentService;
 
-    private ModelMapper modelMapper;
-
     private UsersService usersService;
+
+    private ModelMapper modelMapper;
 
     @Autowired
     public WardController(WardService wardService, AppointmentService appointmentService, UsersService usersService, ModelMapper modelMapper) {
@@ -82,6 +84,50 @@ public class WardController extends BaseController {
     }
 
     @GetMapping("/{wardName}")
+    public ModelAndView choseDateForAppointmentByWard(@PathVariable String wardName, @ModelAttribute("chosenDate") String chosenDate){
+
+        //WardServiceModel wardServiceModel = this.wardService.findByWardName(wardName);
+        //WardViewModel wardViewModel = this.modelMapper.map(wardServiceModel, WardViewModel.class);
+
+        return super.view("views/wards/date-appointments-by-ward", wardName);
+    }
+
+    @PostMapping("/{wardName}/date")
+    public ModelAndView storeAppointment(@ModelAttribute("chosenDate") String chosenDate, @ModelAttribute AppointmentBindingModel appointmentBindingModel, BindingResult bindingResult, Authentication authentication,
+                                         @PathVariable(value = "wardName", required = true) String wardName){
+        if (bindingResult.hasErrors()){
+
+            //TODO:
+            // make this one smarter (if there are any errors)
+            // can make field wardViewModel, which to sent to the template (initialize it in the @GetMapping method)
+
+            return super.redirect("/wards/" + wardName);
+        }
+
+        WardFreeAppointmentsServiceModel wardFreeAppointmentsServiceModel = this.wardService.findByAppointmentDate(wardName, chosenDate);
+        WardFreeAppointmentsViewModel wardFreeAppointmentsViewModel = this.modelMapper.map(wardFreeAppointmentsServiceModel, WardFreeAppointmentsViewModel.class);
+
+        return super.view("views/wards/time-appointments-by-date", wardFreeAppointmentsViewModel);
+    }
+
+    @PostMapping("/{wardName}")
+    public ModelAndView storeAppointment(@ModelAttribute AppointmentBindingModel appointmentBindingModel, BindingResult bindingResult, Authentication authentication,
+                                         @PathVariable(value = "wardName", required = true) String wardName){
+        if (bindingResult.hasErrors()){
+
+            //TODO:
+            // make this one smarter (if there are any errors)
+            // can make field wardViewModel, which to sent to the template (initialize it in the @GetMapping method)
+
+            return super.redirect("/wards/" + wardName);
+        }
+
+        this.wardService.makeAppointment(appointmentBindingModel, wardName, authentication);
+        return super.redirect("/wards/" + wardName);
+    }
+
+    /*
+    @GetMapping("/{wardName}")
     public ModelAndView getAppointmentsByWard(@PathVariable String wardName, @ModelAttribute AppointmentBindingModel appointmentBindingModel){
 
         WardServiceModel wardServiceModel = this.wardService.findByWardName(wardName);
@@ -105,4 +151,5 @@ public class WardController extends BaseController {
         this.wardService.makeAppointment(appointmentBindingModel, wardName, authentication);
         return super.redirect("/wards/" + wardName);
     }
+    */
 }
