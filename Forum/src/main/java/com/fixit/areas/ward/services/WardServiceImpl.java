@@ -1,12 +1,16 @@
 package com.fixit.areas.ward.services;
 
+import com.fixit.areas.appointments.models.binding.AppointmentBindingModel;
 import com.fixit.areas.appointments.models.service.AppointmentServiceModel;
 import com.fixit.areas.appointments.services.AppointmentService;
+import com.fixit.areas.users.models.service.UsersServiceModel;
+import com.fixit.areas.users.services.UsersService;
 import com.fixit.areas.ward.entities.Ward;
 import com.fixit.areas.ward.models.service.WardServiceModel;
 import com.fixit.areas.ward.repository.WardRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +25,16 @@ public class WardServiceImpl implements WardService{
 
     private final AppointmentService appointmentService;
 
+    private final UsersService usersService;
+
     private final ModelMapper modelMapper;
 
     @Autowired
-    public WardServiceImpl(WardRepository wardRepository, AppointmentService appointmentService, ModelMapper modelMapper) {
+    public WardServiceImpl(WardRepository wardRepository, AppointmentService appointmentService, @Lazy UsersService usersService, ModelMapper modelMapper) {
 
         this.wardRepository = wardRepository;
         this.appointmentService = appointmentService;
+        this.usersService = usersService;
         this.modelMapper = modelMapper;
     }
 
@@ -75,19 +82,13 @@ public class WardServiceImpl implements WardService{
     }
 
     @Override
-    public void makeAppointment(Date date, String wardName, Authentication authentication) {
+    public void makeAppointment(AppointmentBindingModel appointmentBindingModel, String wardName, Authentication authentication) {
 
-        AppointmentServiceModel appointmentServiceModel = new AppointmentServiceModel();
-        appointmentServiceModel.setDate(date);
+        AppointmentServiceModel appointmentServiceModel = this.modelMapper.map(appointmentBindingModel, AppointmentServiceModel.class);
         WardServiceModel wardServiceModel = this.findByWardName(wardName);
         appointmentServiceModel.setWard(wardServiceModel);
-
-        // TODO:
-        // add this field once the user models are ready
-        /*
         UsersServiceModel usersServiceModel = this.usersService.findByUsername(authentication.getName());
-        appointmentServiceModel.setUser(usersServiceModel);
-        */
+        appointmentServiceModel.setPatient(usersServiceModel);
 
         this.appointmentService.create(appointmentServiceModel);
     }

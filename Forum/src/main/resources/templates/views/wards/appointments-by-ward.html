@@ -14,12 +14,12 @@
                 <th:block th:each="appointment : *{appointments}">
                     <div class="bg-white mb-3 p-3 row">
                         <p th:text="${appointment.date}"></p>
+                        <p th:text="${appointment.time}"></p>
                     </div>
                 </th:block>
             </th:block>
 
             <div class="bg-white mb-3 p-3 row">
-                <p>TEST</p>
                 <button data-toggle="modal" data-target="#makeAppointmentModal" class="btn m-1 text-white bg-primary text-center"> Make Appointment </button>
             </div>
         </div>

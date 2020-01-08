@@ -7,12 +7,13 @@ import java.util.Date;
 public class AppointmentViewModel {
 
     private Long id;
-    private Date date;
+    private String date;
+    private String time;
 
     private WardViewModel ward;
 
     // TODO:
-    // will add these field once the view models are done
+    // will add these fields once the view models are done
     /*
     private UserViewModel patient;
     private ExaminationViewModel examinations;
@@ -29,12 +30,20 @@ public class AppointmentViewModel {
         this.id = id;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public WardViewModel getWard() {

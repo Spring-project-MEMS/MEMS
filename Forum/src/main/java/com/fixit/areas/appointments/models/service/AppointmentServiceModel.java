@@ -1,5 +1,6 @@
 package com.fixit.areas.appointments.models.service;
 
+import com.fixit.areas.users.models.service.UsersServiceModel;
 import com.fixit.areas.ward.models.service.WardServiceModel;
 
 import java.util.Date;
@@ -7,14 +8,15 @@ import java.util.Date;
 public class AppointmentServiceModel {
 
     private Long id;
-    private Date date;
+    private String date;
+    private String time;
 
     private WardServiceModel ward;
+    private UsersServiceModel patient;
 
     // TODO:
-    // will add these field once the service models are done
+    // will add these fields once the service models are done
     /*
-    private UserServiceModel patient;
     private ExaminationServiceModel examinations;
     */
 
@@ -29,12 +31,20 @@ public class AppointmentServiceModel {
         this.id = id;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public WardServiceModel getWard() {
@@ -43,5 +53,13 @@ public class AppointmentServiceModel {
 
     public void setWard(WardServiceModel ward) {
         this.ward = ward;
+    }
+
+    public UsersServiceModel getPatient() {
+        return patient;
+    }
+
+    public void setPatient(UsersServiceModel patient) {
+        this.patient = patient;
     }
 }

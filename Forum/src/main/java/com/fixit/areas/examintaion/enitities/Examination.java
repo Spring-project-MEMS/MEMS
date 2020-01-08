@@ -35,8 +35,9 @@ public class Examination {
     @JoinColumn(name = "result_id", referencedColumnName = "id")
     private Result result;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    private String date;
+
+    private String time;
 
     public Examination() {
     }
@@ -89,11 +90,19 @@ public class Examination {
         this.result = result;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

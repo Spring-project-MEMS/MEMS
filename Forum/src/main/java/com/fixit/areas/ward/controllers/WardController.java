@@ -100,28 +100,9 @@ public class WardController extends BaseController {
             // can make field wardViewModel, which to sent to the template (initialize it in the @GetMapping method)
 
             return super.redirect("/wards/" + wardName);
-
-            /*
-            WardServiceModel wardServiceModel = this.wardService.findByWardName(wardName);
-            WardViewModel wardViewModel = this.modelMapper.map(wardServiceModel, WardViewModel.class);
-            return super.view("views/wards/appointments-by-ward", wardViewModel);
-            */
         }
 
-        // TODO:
-        // problem with parsing the data from template to BE fields
-        // PROBABLY NEED TO CHANGE THE ENTITY TO HAVE TWO STRING FIELDS FOR DATE AND TIME
-        // DOES NOT WORK NOW
-
-        String date = appointmentBindingModel.getDate();
-        String time = appointmentBindingModel.getTime();
-
-        StringBuilder stringBuilder = new StringBuilder();
-        StringBuilder localDateTimeString = stringBuilder.append(date).append("T").append(time);
-
-        LocalDateTime localDateTime = LocalDateTime.parse(localDateTimeString.toString());
-
-        //this.wardService.makeAppointment(localDateTime., wardName, authentication);
+        this.wardService.makeAppointment(appointmentBindingModel, wardName, authentication);
         return super.redirect("/wards/" + wardName);
     }
 }

@@ -19,5 +19,5 @@ public interface WardService {
 
     WardServiceModel findById(Long id);
 
-    void makeAppointment(Date date, String wardName, Authentication authentication);
+    void makeAppointment(AppointmentBindingModel appointmentBindingModel, String wardName, Authentication authentication);
 }

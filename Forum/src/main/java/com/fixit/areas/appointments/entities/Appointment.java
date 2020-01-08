@@ -26,8 +26,9 @@ public class Appointment {
     @OneToOne(mappedBy = "appointment")
     private Examination examination;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    private String date;
+
+    private String time;
 
     public Appointment() {
     }
@@ -64,11 +65,19 @@ public class Appointment {
         this.examination = examination;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }
