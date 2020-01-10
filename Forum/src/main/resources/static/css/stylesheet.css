@@ -22,12 +22,13 @@ body {
 
 .header-nav {
     /*
-    background-image: url("https://martechseries.com/wp-content/uploads/2019/08/Resolve-Acquires-FixStream-for-_24M-USD-to-Deliver-Game-Changing-Combination-of-AIOps-and-Advanced-Automation-in-a-Unified-Platform-1024x579.jpg");
-     */
     background-image: url("../img/background.jpg");
+    */
 
     min-height: 150px;
     border-bottom: 1px solid #FFFFFF;
+
+    background-color: #a3a8aa;
 }
 
 .avatar img {
