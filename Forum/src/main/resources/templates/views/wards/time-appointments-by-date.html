@@ -11,15 +11,20 @@
             </th:block>
 
             <th:block th:unless="*{#sets.isEmpty(appointments)}">
-                <div class="form-group">
-                    <label>Choose time:</label>
-                    <select form="appointmentSubmit" name="time" required="true" class="form-control">
-                        <option th:each="appointment : *{appointments}" th:value="${appointment}" th:text="${appointment}"> </option>
-                    </select>
-                </div>
+                <form id="appointmentSubmit" th:method="post" th:action="@{/wards/{name}(name=${viewModel.wardName})}" th:object="${appointmentBindingModel}">
+                    <div class="form-group">
+                        <label>Choose time:</label>
+                        <select form="appointmentSubmit" name="time" required="true" class="form-control">
+                            <option th:each="appointment : ${viewModel.appointments}" th:value="${appointment}" th:text="${appointment}"> </option>
+                        </select>
+                    </div>
 
-                <button data-toggle="modal" data-target="#bookAppointmentModal" class="btn m-1 text-white bg-primary text-center"> Book </button>
+                    <input type="hidden" name="date" th:value="${viewModel.date}"/>
+                </form>
             </th:block>
+
+            <button data-toggle="modal" data-target="#bookAppointmentModal" class="btn m-1 text-white bg-primary text-center"> Book </button>
+
         </div>
 
         <th:block th:include="~{fragments/sidebar-wards}"/>

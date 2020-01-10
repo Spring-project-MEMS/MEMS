@@ -7,33 +7,18 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="appointmentSubmit" th:method="post" th:action="@{/wards/{name}(name=${viewModel.wardName})}" th:object="${appointmentBindingModel}">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <h6 th:text="|Are you sure you would like to book this appointment?|"></h6>
 
-                        <!--
-                        <label for="chooseDateInput">Choose date:</label>
-                        <input name="date" type="date" class="form-control" id="chooseDateInput" th:field = "*{date}">
-                        <div class="text-danger" id="chooseDateHint" th:each="error : ${#fields.errors('date')}" th:text="${error}">Error Message</div>
-                        -->
-
-                        <!--
-                        TODO:
-                        FIND WHY THESE FIELD ARE NOT SENDING VALUE TO THE BACKEND
-                        -->
-                        <input type="hidden" name="date" th:value="${viewModel.date}"/>
-                        <!--
-                        <input type="hidden" name="time" value="00:00"/>
-                        -->
-                    </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h6 th:text="|Are you sure you would like to book this appointment?|"></h6>
                 </div>
+            </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" id="makeAppointmentButton" class="btn text-white bg-primary">Submit</button>
-                </div>
-            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" form="appointmentSubmit" id="makeAppointmentButton" class="btn text-white bg-primary">Submit</button>
+            </div>
+
         </div>
     </div>
 </div>
