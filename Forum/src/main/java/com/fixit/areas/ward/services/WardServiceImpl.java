@@ -17,6 +17,9 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -57,16 +60,23 @@ public class WardServiceImpl implements WardService{
     @Override
     public WardFreeAppointmentsServiceModel findByAppointmentDate(String wardName, String date) {
 
-        //Set<AppointmentServiceModel> appointmentServiceModels = this.appointmentService.findAllByDateAndWardName(date, wardName);
-        Ward ward = this.wardRepository.findByWardName(wardName);
+        String currentDateString = LocalDate.now().toString();
 
-        Set<Appointment> appointments = ward.getAppointments();
+        Ward ward = this.wardRepository.findByWardName(wardName);
+        Set<AppointmentServiceModel> appointmentServiceModels = this.appointmentService.findAllByDateAndWard(date, ward);
+
+        //Set<Appointment> appointments = ward.getAppointments();
         Set<String> appointmentsForDate = new HashSet<>();
 
+        /*
         for(Appointment appointment : appointments){
             if(appointment.getDate().equals(date)){
                 appointmentsForDate.add(appointment.getTime());
             }
+        }
+        */
+        for(AppointmentServiceModel appointmentServiceModel : appointmentServiceModels){
+            appointmentsForDate.add(appointmentServiceModel.getTime());
         }
 
         List<String> freeAppointments = new ArrayList<String>();

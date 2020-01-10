@@ -10,7 +10,7 @@
             <form th:method="post" th:action="@{/wards/{name}(name=${viewModel.wardName})}" th:object="${appointmentBindingModel}">
                 <div class="modal-body">
                     <div class="form-group">
-                        <h6 th:text="|Are you sure you would like to book an appointment for ward ${viewModel.wardName} at time ... :|"></h6>
+                        <h6 th:text="|Are you sure you would like to book an appointment for ward ${viewModel.wardName} on date ${viewModel.date} at time ... :|"></h6>
 
                         <!--
                         <label for="chooseDateInput">Choose date:</label>
@@ -24,7 +24,6 @@
                         -->
                         <input type="hidden" name="date" th:value="${viewModel.date}" th:field = "*{date}"/>
                         <input type="hidden" name="time" value="00:00" th:field = "*{time}"/>
-
                     </div>
                 </div>
 

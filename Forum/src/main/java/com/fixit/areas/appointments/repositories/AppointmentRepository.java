@@ -14,5 +14,5 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     Set<Appointment> findAllByDate(String date);
 
-    Set<Appointment> findAllByDateAndWardContains(String date, String ward);
+    Set<Appointment> findAllByDateAndWard(String date, Ward ward);
 }
