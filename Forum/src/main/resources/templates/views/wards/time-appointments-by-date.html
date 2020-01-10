@@ -11,12 +11,14 @@
             </th:block>
 
             <th:block th:unless="*{#sets.isEmpty(appointments)}">
-                <th:block th:each="appointment : *{appointments}">
-                    <div class="bg-white mb-3 p-3 row">
-                        <p th:text="${appointment}"></p>
-                        <button data-toggle="modal" data-target="#bookAppointmentModal" class="btn m-1 text-white bg-primary text-center"> Book </button>
-                    </div>
-                </th:block>
+                <div class="form-group">
+                    <label>Choose time:</label>
+                    <select form="appointmentSubmit" name="time" required="true" class="form-control">
+                        <option th:each="appointment : *{appointments}" th:value="${appointment}" th:text="${appointment}"> </option>
+                    </select>
+                </div>
+
+                <button data-toggle="modal" data-target="#bookAppointmentModal" class="btn m-1 text-white bg-primary text-center"> Book </button>
             </th:block>
         </div>
 

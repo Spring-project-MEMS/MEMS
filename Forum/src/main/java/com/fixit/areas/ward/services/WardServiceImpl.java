@@ -60,9 +60,20 @@ public class WardServiceImpl implements WardService{
     @Override
     public WardFreeAppointmentsServiceModel findByAppointmentDate(String wardName, String date) {
 
-        String currentDateString = LocalDate.now().toString();
-
         Ward ward = this.wardRepository.findByWardName(wardName);
+        List<String> freeAppointments = new ArrayList<String>();
+
+        LocalDate currentDate = LocalDate.now();
+        LocalDate chosenDate = LocalDate.parse(date);
+
+        if (chosenDate.isBefore(currentDate)){
+            WardFreeAppointmentsServiceModel wardFreeAppointmentsServiceModel = this.modelMapper.map(ward, WardFreeAppointmentsServiceModel.class);
+            wardFreeAppointmentsServiceModel.setAppointments(freeAppointments);
+            wardFreeAppointmentsServiceModel.setDate(date);
+
+            return wardFreeAppointmentsServiceModel;
+        }
+
         Set<AppointmentServiceModel> appointmentServiceModels = this.appointmentService.findAllByDateAndWard(date, ward);
 
         //Set<Appointment> appointments = ward.getAppointments();
@@ -78,8 +89,6 @@ public class WardServiceImpl implements WardService{
         for(AppointmentServiceModel appointmentServiceModel : appointmentServiceModels){
             appointmentsForDate.add(appointmentServiceModel.getTime());
         }
-
-        List<String> freeAppointments = new ArrayList<String>();
 
         for(int counter = 6; counter <= 22; counter++){
             String currentTime = counter < 10 ? "0" + counter + ":00" : counter + ":00";
