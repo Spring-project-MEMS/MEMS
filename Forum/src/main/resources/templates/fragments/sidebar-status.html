@@ -1,20 +1,14 @@
 <div class="col-sm-12 col-md-12 col-lg-4">
     <div class="p-2 bg-white rounded">
-        <h3 th:text="#{categories}"></h3>
-        <div th:if="${#sets.size(categoryNames) > 0}">
-            <div class="divline"></div>
-            <div class="p-2">
-                <ul class="cats p-0 m-0 list-unstyled">
-                    <th:block th:each="categoryName : ${categoryNames}">
-                        <a th:text="${categoryName}" th:href="@{/categories/{name}(name=${categoryName})}"
-                           class="list-group-item list-group-item-action"></a>
-                    </th:block>
-                </ul>
-            </div>
-        </div>
-        <div th:unless="${#sets.size(categoryNames) > 0}">
-            <p class="text-secondary p-3">There are no categories yet. Consider creating one yourself by logging in as
-                administrator.</p>
+        <h3 th:text="#{status}"></h3>
+        <div class="divline"></div>
+        <div class="p-2">
+            <ul class="cats p-0 m-0 list-unstyled">
+                <a th:text="#{open}" th:href="@{/examinations/{status}(status=#{open})}" class="list-group-item list-group-item-action"></a>
+                <a th:text="#{processed}" th:href="@{/examinations/{status}(status=#{processed})}" class="list-group-item list-group-item-action"></a>
+                <a th:text="#{pending}" th:href="@{/examinations/{status}(status=#{pending})}" class="list-group-item list-group-item-action"></a>
+                <a th:text="#{closed}" th:href="@{/examinations/{status}(status=#{closed})}" class="list-group-item list-group-item-action"></a>
+            </ul>
         </div>
     </div>
 </div>
