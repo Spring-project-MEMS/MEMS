@@ -1,0 +1,21 @@
+<div class="container" xmlns:th="http://www.thymeleaf.org">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-8" th:object="${viewModel}">
+
+            <!-- POST -->
+            <th:block th:include="~{fragments/examinations/by-id/examination}"/>
+
+        </div>
+
+        <!-- SIDEBAR -->
+        <th:block th:include="~{fragments/sidebar-status}"/>
+
+    </div>
+
+    <!-- EDIT MODAL -->
+    <th:block th:include="~{fragments/examinations/by-id/edit-modal}"/>
+
+    <!-- DELETE MODAL -->
+    <th:block th:include="~{fragments/examinations/by-id/delete-modal}"/>
+
+</div>
