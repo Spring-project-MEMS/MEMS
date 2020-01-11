@@ -26,9 +26,9 @@ public class AppointmentServiceImpl implements AppointmentService{
     }
 
     @Override
-    public void create(AppointmentServiceModel appointmentServiceModel) {
+    public AppointmentServiceModel create(AppointmentServiceModel appointmentServiceModel) {
         Appointment appointment = this.modelMapper.map(appointmentServiceModel, Appointment.class);
-        this.appointmentRepository.save(appointment);
+        return this.modelMapper.map(this.appointmentRepository.save(appointment), AppointmentServiceModel.class);
     }
 
     @Override
