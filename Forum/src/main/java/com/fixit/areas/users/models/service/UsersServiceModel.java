@@ -1,7 +1,6 @@
 package com.fixit.areas.users.models.service;
 
 import com.fixit.areas.role.models.service.RoleServiceModel;
-import com.fixit.areas.ward.entities.Ward;
 import com.fixit.areas.ward.models.service.WardServiceModel;
 
 import java.util.Set;
@@ -32,9 +31,7 @@ public class UsersServiceModel {
 //
 //    private Set<ResultServiceModel> results;
 
-    private boolean admin;
-
-    private boolean doctor;
+    private String roleName;
 
     private String wardName;
 
@@ -134,20 +131,13 @@ public class UsersServiceModel {
 //        this.results = results;
 //    }
 
-    public boolean isAdmin() {
-        return admin;
+
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
-
-    public boolean isDoctor() {
-        return doctor;
-    }
-
-    public void setDoctor(boolean doctor) {
-        this.doctor = doctor;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     public String getWardName() {

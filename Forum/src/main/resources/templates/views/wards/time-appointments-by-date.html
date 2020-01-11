@@ -1,0 +1,36 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml" class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-8" th:object="${viewModel}">
+            <h4 th:text="|Make appointment in ward ${viewModel.wardName} for date ${viewModel.date}:|"></h4>
+            <hr>
+
+            <th:block th:if="*{#sets.isEmpty(appointments)}">
+                <div class="bg-white mb-3 p-3 row">
+                    <p>All appointments are booked for this date, please choose another one.</p>
+                </div>
+            </th:block>
+
+            <th:block th:unless="*{#sets.isEmpty(appointments)}">
+                <form id="appointmentSubmit" th:method="post" th:action="@{/wards/{name}(name=${viewModel.wardName})}" th:object="${appointmentBindingModel}">
+                    <div class="form-group">
+                        <label>Choose time:</label>
+                        <select form="appointmentSubmit" name="time" required="true" class="form-control">
+                            <option th:each="appointment : ${viewModel.appointments}" th:value="${appointment}" th:text="${appointment}"> </option>
+                        </select>
+                    </div>
+
+                    <input type="hidden" name="date" th:value="${viewModel.date}"/>
+                </form>
+            </th:block>
+
+            <button data-toggle="modal" data-target="#bookAppointmentModal" class="btn m-1 text-white bg-primary text-center"> Book </button>
+
+        </div>
+
+        <th:block th:include="~{fragments/sidebar-wards}"/>
+    </div>
+
+    <!-- MAKE APPOINTMENT MODAL -->
+    <th:block th:include="~{fragments/wards/book-appointment-modal}"/>
+
+</div>

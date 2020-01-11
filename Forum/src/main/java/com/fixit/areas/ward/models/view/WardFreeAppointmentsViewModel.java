@@ -1,16 +1,15 @@
 package com.fixit.areas.ward.models.view;
 
-import com.fixit.areas.appointments.models.view.AppointmentViewModel;
-
+import java.util.List;
 import java.util.Set;
 
-public class WardViewModel {
-
+public class WardFreeAppointmentsViewModel {
     private Long id;
     private String wardName;
     private String roomNumber;
 
-    private Set<AppointmentViewModel> appointments;
+    private String date;
+    private List<String> appointments;
 
     // TODO:
     // can add these sets once the view models are done
@@ -21,7 +20,7 @@ public class WardViewModel {
     private Set<ResultViewModel> results;
     */
 
-    public WardViewModel() {
+    public WardFreeAppointmentsViewModel() {
     }
 
     public Long getId() {
@@ -48,11 +47,19 @@ public class WardViewModel {
         this.roomNumber = roomNumber;
     }
 
-    public Set<AppointmentViewModel> getAppointments() {
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public List<String> getAppointments() {
         return appointments;
     }
 
-    public void setAppointments(Set<AppointmentViewModel> appointments) {
+    public void setAppointments(List<String> appointments) {
         this.appointments = appointments;
     }
 }

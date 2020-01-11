@@ -55,24 +55,21 @@ public class UsersServiceImpl implements UsersService {
             userEntity.setLastName(null);
         }
 
-        String authorityName = "PATIENT";
-        if(userServiceModel.isAdmin()){
-            authorityName = "ADMIN";
-        }
-        if(userServiceModel.isDoctor()){
-            authorityName = "DOCTOR";
-        }
-        RoleServiceModel roleServiceModel = this.roleService.findByAuthority(authorityName);
+        RoleServiceModel roleServiceModel = this.roleService.findByAuthority(userServiceModel.getRoleName());
         Role role  = this.modelMapper.map(roleServiceModel, Role.class);
 
         userEntity.addRole(role);
-//        if(!userServiceModel.getWardName().isEmpty())
-//        {
-//            WardServiceModel wardServiceModel = this.wardService.findByWardName(userServiceModel.getWardName());
-//            Ward ward = this.modelMapper.map(wardServiceModel, Ward.class);
-//
-//            userEntity.setWard(ward);
-//        }
+
+        if(userServiceModel.getWardName() == null){
+            userEntity.setWard(null);
+        }
+        else
+        {
+            WardServiceModel wardServiceModel = this.wardService.findByWardName(userServiceModel.getWardName());
+            Ward ward = this.modelMapper.map(wardServiceModel, Ward.class);
+
+            userEntity.setWard(ward);
+        }
 
         this.userRepository.save(userEntity);
     }
