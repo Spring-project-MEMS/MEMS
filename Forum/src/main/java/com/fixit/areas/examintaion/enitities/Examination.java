@@ -27,7 +27,7 @@ public class Examination {
     @JoinColumn(name = "patient_id")
     private Users patient;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "appointment_id", referencedColumnName = "id")
     private Appointment appointment;
 

@@ -5,6 +5,8 @@ import com.fixit.areas.appointments.models.binding.AppointmentBindingModel;
 import com.fixit.areas.appointments.models.service.AppointmentServiceModel;
 import com.fixit.areas.appointments.repositories.AppointmentRepository;
 import com.fixit.areas.appointments.services.AppointmentService;
+import com.fixit.areas.examintaion.models.service.ExaminationServiceModel;
+import com.fixit.areas.examintaion.services.ExaminationService;
 import com.fixit.areas.users.models.service.UsersServiceModel;
 import com.fixit.areas.users.services.UsersService;
 import com.fixit.areas.ward.entities.Ward;
@@ -13,6 +15,7 @@ import com.fixit.areas.ward.models.service.WardServiceModel;
 import com.fixit.areas.ward.repository.WardRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -25,20 +28,26 @@ import java.util.*;
 @Service
 public class WardServiceImpl implements WardService{
 
+    @Value("${examination.status.open}")
+    private String examinationStatusOpen;
+
     private final WardRepository wardRepository;
 
     private final AppointmentService appointmentService;
 
     private final UsersService usersService;
 
+    private final ExaminationService examinationService;
+
     private final ModelMapper modelMapper;
 
     @Autowired
-    public WardServiceImpl(WardRepository wardRepository, AppointmentService appointmentService, @Lazy UsersService usersService, ModelMapper modelMapper) {
+    public WardServiceImpl(WardRepository wardRepository, AppointmentService appointmentService, @Lazy UsersService usersService, ExaminationService examinationService, ModelMapper modelMapper) {
 
         this.wardRepository = wardRepository;
         this.appointmentService = appointmentService;
         this.usersService = usersService;
+        this.examinationService = examinationService;
         this.modelMapper = modelMapper;
     }
 
@@ -143,6 +152,16 @@ public class WardServiceImpl implements WardService{
         UsersServiceModel usersServiceModel = this.usersService.findByUsername(authentication.getName());
         appointmentServiceModel.setPatient(usersServiceModel);
 
-        this.appointmentService.create(appointmentServiceModel);
+        ExaminationServiceModel examinationServiceModel = this.modelMapper.map(appointmentBindingModel, ExaminationServiceModel.class);
+        examinationServiceModel.setWard(wardServiceModel);
+        examinationServiceModel.setPatient(usersServiceModel);
+
+        //this.appointmentService.create(appointmentServiceModel);
+
+        AppointmentServiceModel appointmentServiceModelCreated = this.appointmentService.create(appointmentServiceModel);
+        examinationServiceModel.setAppointment(appointmentServiceModelCreated);
+        examinationServiceModel.setStatus(examinationStatusOpen);
+
+        this.examinationService.create(examinationServiceModel);
     }
 }
