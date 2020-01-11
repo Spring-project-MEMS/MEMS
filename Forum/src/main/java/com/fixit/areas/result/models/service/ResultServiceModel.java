@@ -6,7 +6,24 @@ public class ResultServiceModel {
 
     private Long id;
     private String description;
-    private Date date;
+    private String date;
+    private String time;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 
     public ResultServiceModel() {
     }
@@ -19,10 +36,6 @@ public class ResultServiceModel {
         return description;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -31,7 +44,4 @@ public class ResultServiceModel {
         this.description = description;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
 }

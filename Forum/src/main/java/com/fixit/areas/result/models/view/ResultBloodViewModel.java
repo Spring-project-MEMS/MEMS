@@ -1,6 +1,6 @@
-package com.fixit.areas.result.models.binding;
+package com.fixit.areas.result.models.view;
 
-public class ResultBloodBindingModel extends ResultBindingModel {
+public class ResultBloodViewModel extends ResultViewModel {
     private double wbc;
     private double rbc;
     private double hb;
@@ -9,6 +9,9 @@ public class ResultBloodBindingModel extends ResultBindingModel {
     private double plt;
     private double sue;
     private double ast;
+
+    public ResultBloodViewModel() {
+    }
 
     public double getWbc() {
         return wbc;
@@ -73,15 +76,4 @@ public class ResultBloodBindingModel extends ResultBindingModel {
     public void setAst(double ast) {
         this.ast = ast;
     }
-
-    public double getAlt() {
-        return alt;
-    }
-
-    public void setAlt(double alt) {
-        this.alt = alt;
-    }
-
-    private double alt;
-
 }
