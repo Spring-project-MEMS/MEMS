@@ -1,33 +1,17 @@
-package com.fixit.areas.result.entities;
+package com.fixit.areas.result.models.service;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "result_blood")
-public class ResultBlood extends Result{
-
-    @Column
+public class ResultBloodServiceModel extends ResultServiceModel {
     private double wbc;
-    @Column
     private double rbc;
-    @Column
     private double hb;
-    @Column
     private double hct;
-    @Column
     private double mcv;
-    @Column
     private double plt;
-    @Column
     private double sue;
-    @Column
     private double ast;
-    @Column
     private double alt;
 
-    public ResultBlood() {
+    public ResultBloodServiceModel() {
     }
 
     public double getWbc() {
@@ -101,4 +85,5 @@ public class ResultBlood extends Result{
     public void setAlt(double alt) {
         this.alt = alt;
     }
+
 }
