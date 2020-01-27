@@ -14,6 +14,13 @@ public interface ExaminationService {
     Set<ExaminationServiceModel> findAll();
 
     Page<ExaminationServiceModel> findAllOpen(Pageable pageable);
+    Page<ExaminationServiceModel> findAllProcessed(Pageable pageable);
+    Page<ExaminationServiceModel> findAllPending(Pageable pageable);
+    Page<ExaminationServiceModel> findAllClosed(Pageable pageable);
 
     void changeOpen(Long id);
+    void changeProcessed(Long id);
+    void changePending(Long id);
+
+    void viewClosed(Long id);
 }
