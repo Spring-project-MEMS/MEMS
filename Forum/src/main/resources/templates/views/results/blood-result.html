@@ -1,0 +1,12 @@
+<div class="container mb-4">
+    <h1 th:text="#{results}"></h1>
+    <hr class="hr-2 bg-info">
+
+        <p th:text="${viewModel.alt}" class="mb-1"></p>
+        <p th:text="${viewModel.ast}" class="mb-1"></p>
+
+    </div>
+    <div th:unless="${#sets.size(viewModel) > 0}">
+        <h4 class="text-secondary">There are no results yet. </h4>
+    </div>
+</div>

@@ -1,18 +1,15 @@
 package com.fixit.areas.result.services;
 
 import com.fixit.areas.result.entities.ResultBlood;
-import com.fixit.areas.result.entities.ResultIrm;
 import com.fixit.areas.result.models.service.ResultBloodServiceModel;
-import com.fixit.areas.result.models.service.ResultIrmServiceModel;
-import com.fixit.areas.result.models.service.ResultServiceModel;
 import com.fixit.areas.result.repositories.ResultBloodRepository;
 import com.fixit.areas.result.repositories.ResultRepository;
+import com.fixit.areas.users.entities.Users;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import javax.xml.transform.Result;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,5 +44,23 @@ public class ResultBloodServiceImpl implements ResultBloodService {
             resultBloodServiceModels.add(resultBloodServiceModel);
         });
         return resultBloodServiceModels;
+    }
+
+    @Override
+    public Set<ResultBloodServiceModel> findByPatient(Users patient) {
+        Set<ResultBloodServiceModel> resultBloodServiceModels=new HashSet<>();
+
+        this.resultBloodRepository.findAllByPatient(patient).forEach(resultBlood -> {
+            ResultBloodServiceModel resultBloodServiceModel =this.modelMapper.map(resultBlood,ResultBloodServiceModel.class);
+            resultBloodServiceModels.add(resultBloodServiceModel);
+        });
+        return resultBloodServiceModels;}
+
+    @Override
+    public ResultBloodServiceModel findById(Long id) {
+        ResultBlood resultBlood=this.resultBloodRepository.findById(id).orElse(null);
+        ResultBloodServiceModel resultBloodServiceModel=this.modelMapper.map(resultBlood,ResultBloodServiceModel.class);
+
+        return resultBloodServiceModel;
     }
 }

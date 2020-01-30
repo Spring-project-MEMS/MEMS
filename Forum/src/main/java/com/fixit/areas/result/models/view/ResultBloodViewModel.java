@@ -9,8 +9,15 @@ public class ResultBloodViewModel extends ResultViewModel {
     private double plt;
     private double sue;
     private double ast;
+    private double alt;
+
 
     public ResultBloodViewModel() {
+    }
+
+    @Override
+    public ResultType getType() {
+        return ResultType.BLOOD;
     }
 
     public double getWbc() {
@@ -76,4 +83,13 @@ public class ResultBloodViewModel extends ResultViewModel {
     public void setAst(double ast) {
         this.ast = ast;
     }
+
+    public double getAlt() {
+        return alt;
+    }
+
+    public void setAlt(double alt) {
+        this.alt = alt;
+    }
 }
+

@@ -1,11 +1,20 @@
 package com.fixit.areas.result.models.view;
 
-public class ResultViewModel {
+public abstract class ResultViewModel {
 
+    private Long id;
     private String description;
     private Long wardId;
 
     public ResultViewModel() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getWardId() {
@@ -24,4 +33,6 @@ public class ResultViewModel {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public abstract ResultType getType();
 }

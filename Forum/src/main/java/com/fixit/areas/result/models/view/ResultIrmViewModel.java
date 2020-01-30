@@ -6,6 +6,11 @@ public class ResultIrmViewModel extends ResultViewModel {
     public ResultIrmViewModel() {
     }
 
+    @Override
+    public ResultType getType() {
+        return ResultType.IRM;
+    }
+
     public String getImg() {
         return img;
     }
@@ -13,4 +18,5 @@ public class ResultIrmViewModel extends ResultViewModel {
     public void setImg(String img) {
         this.img = img;
     }
+
 }
