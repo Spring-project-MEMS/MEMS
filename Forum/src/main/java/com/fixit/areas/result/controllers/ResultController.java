@@ -98,18 +98,7 @@ public class ResultController extends BaseController {
         Set<ResultViewModel> resultViewModels = new TreeSet<>(Comparator.comparing(ResultViewModel::getId));
         //if is not logged in
         if(auth==null ){
-                this.resultIrmService.findAllResultsIrm().forEach(resultIrmServiceModel -> {
-                    ResultIrmViewModel resultIrmViewModel = this.modelMapper.map(resultIrmServiceModel, ResultIrmViewModel.class);
-                    resultViewModels.add(resultIrmViewModel);
-                });
-
-                this.resultBloodService.findAllResultsBlood().forEach(resultBloodServiceModel -> {
-                    ResultBloodViewModel resultBloodViewModel = this.modelMapper.map(resultBloodServiceModel, ResultBloodViewModel.class);
-                    resultViewModels.add(resultBloodViewModel);
-                });
                 return super.view("views/results/all-results",resultViewModels);
-
-
         }
         else {
             Users user = (Users) auth.getPrincipal();
