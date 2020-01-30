@@ -3,9 +3,11 @@ package com.fixit.areas.users.controllers;
 import com.fixit.abstractions.controller.BaseController;
 import com.fixit.areas.users.models.binding.UsersRegisterBindingModel;
 import com.fixit.areas.users.models.service.UsersServiceModel;
+import com.fixit.areas.users.models.view.UserManageViewModel;
 import com.fixit.areas.users.services.UsersService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UsersController extends BaseController {
@@ -122,6 +126,44 @@ public class UsersController extends BaseController {
             mav.addObject("error", "Wrong username or password");
         }
         return mav;
+    }
+
+    @GetMapping("/manage")
+    public ModelAndView allUsersManage(Authentication authentication){
+        List<UserManageViewModel> userManageViewModels = this.usersService.getAllUsersToManage();
+        return super.view("/views/user/manage", userManageViewModels);
+    }
+
+    @PostMapping("/lock/{username}")
+    public ModelAndView lockUser(@PathVariable String username, Authentication authentication){
+        if(this.usersService.hasAdminRights(authentication)){
+            this.usersService.lockUser(username);
+        }
+        return super.redirect("/manage");
+    }
+
+    @PostMapping("/unlock/{username}")
+    public ModelAndView unlockUser(@PathVariable String username, Authentication authentication){
+        if(this.usersService.hasAdminRights(authentication)){
+            this.usersService.unlockUser(username);
+        }
+        return super.redirect("/manage");
+    }
+
+    @PostMapping("/manage/search")
+    public ModelAndView search(@RequestParam String username, Authentication authentication){
+
+        if(!this.usersService.hasAdminRights(authentication) || username == null || username.isEmpty()){
+            return super.redirect("/manage");
+        }
+
+        UserManageViewModel userManageViewModel = this.usersService.manageByUsername(username);
+        List<UserManageViewModel> userManageViewModelList = new ArrayList<>();
+        if(userManageViewModel != null){
+            userManageViewModelList.add(userManageViewModel);
+        }
+
+        return super.view("views/user/manage", userManageViewModelList);
     }
 
 }

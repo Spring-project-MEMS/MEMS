@@ -5,16 +5,22 @@ import com.fixit.areas.role.models.service.RoleServiceModel;
 import com.fixit.areas.role.services.RoleService;
 import com.fixit.areas.users.entities.Users;
 import com.fixit.areas.users.models.service.UsersServiceModel;
+import com.fixit.areas.users.models.view.UserManageViewModel;
 import com.fixit.areas.users.repositories.UsersRepository;
 import com.fixit.areas.ward.entities.Ward;
 import com.fixit.areas.ward.models.service.WardServiceModel;
 import com.fixit.areas.ward.services.WardService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -98,5 +104,74 @@ public class UsersServiceImpl implements UsersService {
         }
 
         return user;
+    }
+
+    @Override
+    public boolean hasAdminRights(Authentication authentication) {
+        List<String> authoritiesList = new ArrayList<String>();
+        authentication.getAuthorities().forEach(auth -> {
+            authoritiesList.add(auth.getAuthority());
+        });
+
+        return authoritiesList.contains("ADMIN");
+    }
+
+    @Override
+    public List<UserManageViewModel> getAllUsersToManage() {
+
+        List<UserManageViewModel> userManageViewModels = new ArrayList<>();
+
+        this.userRepository.findAll().forEach(user -> {
+            UserManageViewModel userManageViewModel = this.modelMapper.map(user, UserManageViewModel.class);
+            userManageViewModel.setWard(user.getWard() != null ? user.getWard().getWardName() : "");
+
+            user.getAuthorities().forEach(role -> {
+                if(role.getAuthority().equals("PATIENT")){
+                    userManageViewModel.setRole("patient");
+                }else if(role.getAuthority().equals("DOCTOR")){
+                    userManageViewModel.setRole("doctor");
+                }else if(role.getAuthority().equals("ADMIN")){
+                    userManageViewModel.setRole("admin");
+                }else {
+                    userManageViewModel.setRole("user");
+                }
+            });
+
+            userManageViewModels.add(userManageViewModel);
+        });
+
+        return userManageViewModels;
+    }
+
+    @Override
+    public UserManageViewModel manageByUsername(String username) {
+        Users userEntity = this.userRepository.findOneByUsername(username);
+        UserManageViewModel userManageViewModel = null;
+
+        if(userEntity != null){
+            userManageViewModel = this.modelMapper.map(userEntity, UserManageViewModel.class);
+        }
+
+        return userManageViewModel;
+    }
+
+    @Override
+    public void lockUser(String username) {
+        Users userEntity = this.userRepository.findOneByUsername(username);
+
+        if(userEntity != null){
+            userEntity.setAccountNonLocked(false);
+            this.userRepository.save(userEntity);
+        }
+    }
+
+    @Override
+    public void unlockUser(String username) {
+        Users userEntity = this.userRepository.findOneByUsername(username);
+
+        if(userEntity != null){
+            userEntity.setAccountNonLocked(true);
+            this.userRepository.save(userEntity);
+        }
     }
 }
