@@ -2,17 +2,22 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Change status</h5>
+                <h5 class="modal-title">View result</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you would like to start this examination?</p>
+                <p>This is the result of this examination.</p>
             </div>
+
+            <!--
+            TODO:
+            PROBABLY POST MAPPING WILL NOT BE NEEDED BECAUSE ONCE THE EXAMINATION IS DONE AND THE RESULT IS WRITEN IT CAN BE CHANGED
+             -->
             <div class="modal-footer">
-                <form method="post" th:action="@{/examinations/open/{id}(id=${examination.id})}">
-                    <button type="submit" class="btn btn-danger">Start</button>
+                <form method="post" th:action="@{/examinations/closed/{id}(id=${examination.id})}">
+                    <button type="submit" class="btn btn-danger">Result</button>
                 </form>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>

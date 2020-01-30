@@ -65,4 +65,73 @@ public class ExaminationController extends BaseController {
         this.examinationService.changeOpen(id);
         return super.redirect("/examinations/open");
     }
+
+    @GetMapping("/processed")
+    public ModelAndView allProcessedExamination(@PageableDefault(size = 10) Pageable pageable){
+
+        Page<ExaminationServiceModel> examinationServiceModels = this.examinationService.findAllProcessed(pageable);
+
+        List<ExaminationViewModel> examinationViewModelList = new ArrayList<>();
+
+        examinationServiceModels.forEach(examinationServiceModel -> {
+            ExaminationViewModel examinationViewModel = this.modelMapper.map(examinationServiceModel, ExaminationViewModel.class);
+            examinationViewModelList.add(examinationViewModel);
+        });
+
+        Page<ExaminationViewModel> examinationViewModelPages = new PageImpl<>(examinationViewModelList, pageable, examinationServiceModels.getTotalElements());
+
+        return super.view("views/examinations/processed", examinationViewModelPages);
+    }
+
+    @PostMapping("/processed/{id}")
+    public ModelAndView changeStatusProcessed (@PathVariable Long id){
+        this.examinationService.changeProcessed(id);
+        return super.redirect("/examinations/processed");
+    }
+
+    @GetMapping("/pending")
+    public ModelAndView allPendingExamination(@PageableDefault(size = 10) Pageable pageable){
+
+        Page<ExaminationServiceModel> examinationServiceModels = this.examinationService.findAllPending(pageable);
+
+        List<ExaminationViewModel> examinationViewModelList = new ArrayList<>();
+
+        examinationServiceModels.forEach(examinationServiceModel -> {
+            ExaminationViewModel examinationViewModel = this.modelMapper.map(examinationServiceModel, ExaminationViewModel.class);
+            examinationViewModelList.add(examinationViewModel);
+        });
+
+        Page<ExaminationViewModel> examinationViewModelPages = new PageImpl<>(examinationViewModelList, pageable, examinationServiceModels.getTotalElements());
+
+        return super.view("views/examinations/pending", examinationViewModelPages);
+    }
+
+    @PostMapping("/pending/{id}")
+    public ModelAndView changeStatusPending (@PathVariable Long id){
+        this.examinationService.changePending(id);
+        return super.redirect("/examinations/pending");
+    }
+
+    @GetMapping("/closed")
+    public ModelAndView allClosedExamination(@PageableDefault(size = 10) Pageable pageable){
+
+        Page<ExaminationServiceModel> examinationServiceModels = this.examinationService.findAllClosed(pageable);
+
+        List<ExaminationViewModel> examinationViewModelList = new ArrayList<>();
+
+        examinationServiceModels.forEach(examinationServiceModel -> {
+            ExaminationViewModel examinationViewModel = this.modelMapper.map(examinationServiceModel, ExaminationViewModel.class);
+            examinationViewModelList.add(examinationViewModel);
+        });
+
+        Page<ExaminationViewModel> examinationViewModelPages = new PageImpl<>(examinationViewModelList, pageable, examinationServiceModels.getTotalElements());
+
+        return super.view("views/examinations/closed", examinationViewModelPages);
+    }
+
+    @PostMapping("/closed/{id}")
+    public ModelAndView viewClosed (@PathVariable Long id){
+        this.examinationService.viewClosed(id);
+        return super.redirect("/examinations/closed");
+    }
 }
