@@ -1,7 +1,5 @@
 package com.fixit.areas.result.models.binding;
 
-import com.fixit.areas.result.services.ResultService;
-import org.modelmapper.ModelMapper;
 
 import javax.validation.constraints.Size;
 

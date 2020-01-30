@@ -5,7 +5,6 @@ import com.fixit.areas.users.entities.Users;
 import com.fixit.areas.ward.entities.Ward;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)

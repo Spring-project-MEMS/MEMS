@@ -3,8 +3,11 @@ package com.fixit.areas.result.models.view;
 public abstract class ResultViewModel {
 
     private Long id;
+
     private String description;
     private Long wardId;
+    private String date;
+    private String time;
 
     public ResultViewModel() {
     }
@@ -35,4 +38,20 @@ public abstract class ResultViewModel {
     }
 
     public abstract ResultType getType();
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 }

@@ -6,9 +6,12 @@
         <th:block th:each="result : ${viewModel}">
             <div class="list-group">
                 <a th:href="@{/results/{type}(type=${result.type},id=${result.id})}" class="list-group-item list-group-item-action flex-column align-items-start">
-                    <p th:text="${result.description}" class="mb-1"></p>
-                    <p th:text="#{${'results.' + result.type}}" class="mb-1"></p>
-                    <small class="text-muted">Can add something here.</small>
+                    <label class="resultLabels" >Result from: </label>
+                    <p th:text="${result.date}" style="display:inline" class="mb-1"></p>
+
+                    <br><label class="resultLabels">Type:</label>
+                    <p th:text="#{${'results.' + result.type}}" style="display:inline" class="mb-1"></p>
+                    </br>
                 </a>
             </div>
         </th:block>

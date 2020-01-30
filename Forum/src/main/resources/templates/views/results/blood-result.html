@@ -1,11 +1,30 @@
 <div class="container mb-4">
     <h1 th:text="#{results}"></h1>
     <hr class="hr-2 bg-info">
+        <h5>Date:</h5>
+        <p th:text="${viewModel.date}" class="mb-1"></p>
+        <p th:text="${viewModel.time}" class="mb-1"></p>
+        <h5>Description:</h5>
+        <p  th:text="${viewModel.description}" class="mb-1"></p>
+        <h5>Alt:</h5>
+        <p th:text="${viewModel.alt}" ></p>
+        <h5>Ast:</h5>
+        <p th:text="${viewModel.ast}" ></p>
+        <h5>Hb:</h5>
+        <p th:text="${viewModel.hb}" ></p>
+        <h5>Hct:</h5>
+        <p th:text="${viewModel.hct}" ></p>
+        <h5>Mcv: </h5>
+        <p th:text="${viewModel.mcv}" ></p>
+        <h5>Plt: </h5>
+        <p th:text="${viewModel.plt}" ></p>
+        <h5>Rbc</h5>
+        <p th:text="${viewModel.rbc}" ></p>
+        <h5>Sue: </h5>
+        <p th:text="${viewModel.sue}" ></p>
+        <h5>Wbc: </h5>
+        <p th:text="${viewModel.wbc}" ></p>
 
-        <p th:text="${viewModel.alt}" class="mb-1"></p>
-        <p th:text="${viewModel.ast}" class="mb-1"></p>
-
-    </div>
     <div th:unless="${#sets.size(viewModel) > 0}">
         <h4 class="text-secondary">There are no results yet. </h4>
     </div>
