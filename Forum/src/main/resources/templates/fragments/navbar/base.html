@@ -30,14 +30,14 @@
                         <a class="nav-link text-white d-inline-block dropdown-toggle" th:text="#{appointments}" href="#" id="navbarDropdownAppointments" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white"></a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownAppointments">
                             <a class="dropdown-item" th:href="@{/wards}" th:text="#{appointments.make}"></a>
-                            <a class="dropdown-item" th:href="@{/wards/all}" th:text="#{appointments.all}"></a>
+                            <a class="dropdown-item" th:href="@{/appointments}" th:text="#{appointments.all}"></a>
                         </div>
                     </li>
                 </th:block>
 
                 <th:block sec:authorize="!isAnonymous() and hasAuthority('DOCTOR')">
                     <li class="nav-item text-white">
-                        <a class="nav-link text-white" th:href="@{/wards}" th:text="#{appointments}"></a>
+                        <a class="nav-link text-white" th:href="@{/appointments}" th:text="#{appointments}"></a>
                     </li>
                 </th:block>
 
@@ -49,7 +49,7 @@
                         <a class="nav-link dropdown-toggle" th:text="#{appointments}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white"></a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" th:href="@{/wards}" th:text="#{appointments.make}"></a>
-                            <a class="dropdown-item" th:href="@{/wards/all}" th:text="#{appointments.all}"></a>
+                            <a class="dropdown-item" th:href="@{/appointments}" th:text="#{appointments.all}"></a>
                         </div>
                     </li>
                 </th:block>
