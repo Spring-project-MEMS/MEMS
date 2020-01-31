@@ -1,6 +1,7 @@
 package com.fixit.areas.result.models.binding;
 
 public class ResultBloodBindingModel extends ResultBindingModel {
+
     private double wbc;
     private double rbc;
     private double hb;

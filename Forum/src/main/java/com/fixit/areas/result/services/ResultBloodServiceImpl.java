@@ -32,7 +32,6 @@ public class ResultBloodServiceImpl implements ResultBloodService {
     public void createResultBlood(ResultBloodServiceModel resultBloodServiceModel) {
         ResultBlood resultBlood=this.modelMapper.map(resultBloodServiceModel,ResultBlood.class);
         this.resultBloodRepository.save(resultBlood);
-
     }
 
     @Override

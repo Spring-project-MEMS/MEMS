@@ -8,23 +8,14 @@ import javax.persistence.Table;
 @Table(name = "result_blood")
 public class ResultBlood extends Result{
 
-    @Column
     private double wbc;
-    @Column
     private double rbc;
-    @Column
     private double hb;
-    @Column
     private double hct;
-    @Column
     private double mcv;
-    @Column
     private double plt;
-    @Column
     private double sue;
-    @Column
     private double ast;
-    @Column
     private double alt;
 
     public ResultBlood() {

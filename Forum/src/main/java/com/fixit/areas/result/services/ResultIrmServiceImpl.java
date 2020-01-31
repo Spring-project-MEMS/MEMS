@@ -2,6 +2,7 @@ package com.fixit.areas.result.services;
 
 import com.fixit.areas.result.entities.ResultIrm;
 import com.fixit.areas.result.models.service.ResultIrmServiceModel;
+import com.fixit.areas.result.models.service.ResultServiceModel;
 import com.fixit.areas.result.repositories.ResultIrmRepository;
 import com.fixit.areas.users.entities.Users;
 import org.modelmapper.ModelMapper;
@@ -61,5 +62,7 @@ public class ResultIrmServiceImpl implements ResultIrmService {
 
         return resultIrmServiceModel;
     }
+
+
 
 }

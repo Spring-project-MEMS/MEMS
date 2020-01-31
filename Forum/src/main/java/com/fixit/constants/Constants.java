@@ -21,4 +21,5 @@ public class Constants {
     public static final String LAST_NAME_LENGTH = "First name should be between 0 and 50 symbols";
     public static final String EGN_LENGTH = "EGN should be between 0 and 20 symbols";
 
+    public static final String RESULT_DESCRIPTION_LENGTH = "Result Description should be between 0 and 1000 symbols";
 }

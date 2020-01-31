@@ -1,16 +1,30 @@
 package com.fixit.areas.result.models.binding;
 
 
+import com.fixit.constants.Constants;
+
 import javax.validation.constraints.Size;
 
 public class ResultBindingModel {
 
-    @Size(min=0,max=1000)
+    @Size(max = 1000, message = Constants.RESULT_DESCRIPTION_LENGTH)
     private String description;
 
     private String date;
     private String time;
 
+
+
+
+    public Long getWardId() {
+        return wardId;
+    }
+
+    public void setWardId(Long wardId) {
+        this.wardId = wardId;
+    }
+
+    private Long wardId;
     public String getDate() {
         return date;
     }

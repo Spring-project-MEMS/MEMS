@@ -1,0 +1,34 @@
+<html xmlns:th="https://www.thymeleaf.org">
+<div th:id="${examination.id}" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Change status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <p>Enter result for this examination:</p>
+                <form  th:action="@{/results/create-irm-result}" th:object="${resultIrmBindingModel}"  method="post">
+                    <p> Description: <input name="description" type="text" ></p>
+                    <p> Img: <input name="img" type="text" ></p>
+                    <input type="hidden" name="date" th:value="${examination.date}"/>
+                    <input type="hidden" name="time" th:value="${examination.time}"/>
+                    <input type="hidden" name="patient" th:value="${examination.patient}"/>
+                    <input type="hidden" name="ward" th:value="${examination.ward}"/>
+
+                    <button type="submit" class="btn btn-danger">Finish</button>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <form method="post" th:action="@{/examinations/pending/{id}(id=${examination.id})}">
+                    <button type="submit" class="btn btn-danger">Finish</button>
+                </form>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

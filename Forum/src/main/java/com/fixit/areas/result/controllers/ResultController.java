@@ -1,6 +1,8 @@
 package com.fixit.areas.result.controllers;
 
 import com.fixit.abstractions.controller.BaseController;
+import com.fixit.areas.result.models.binding.ResultBloodBindingModel;
+import com.fixit.areas.result.models.binding.ResultIrmBindingModel;
 import com.fixit.areas.result.models.service.ResultBloodServiceModel;
 import com.fixit.areas.result.models.service.ResultIrmServiceModel;
 import com.fixit.areas.result.models.view.ResultBloodViewModel;
@@ -8,17 +10,18 @@ import com.fixit.areas.result.models.view.ResultIrmViewModel;
 import com.fixit.areas.result.models.view.ResultViewModel;
 import com.fixit.areas.result.services.ResultBloodService;
 import com.fixit.areas.result.services.ResultIrmService;
-import com.fixit.areas.role.entities.Role;
-import com.fixit.areas.users.entities.Users;
+import com.fixit.areas.result.services.ResultService;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
@@ -30,38 +33,60 @@ public class ResultController extends BaseController {
 
     public ResultIrmService resultIrmService;
     public ResultBloodService resultBloodService;
+    public ResultService resultService;
     public ModelMapper modelMapper;
 
+
     @Autowired
-    public ResultController( ResultIrmService resultIrmService,ResultBloodService resultBloodService, ModelMapper modelMapper) {
+    public ResultController( ResultService resultService,ResultIrmService resultIrmService,ResultBloodService resultBloodService, ModelMapper modelMapper) {
         this.resultIrmService = resultIrmService;
         this.resultBloodService = resultBloodService;
+        this.resultService=resultService;
         this.modelMapper = modelMapper;
 
-        ResultBloodServiceModel resultBloodServiceModel=new ResultBloodServiceModel();
-        resultBloodServiceModel.setAlt(23.3);
-        resultBloodServiceModel.setAst(45.2);
-        resultBloodServiceModel.setHct(98.3);
-        resultBloodServiceModel.setHb(94.3);
-        resultBloodServiceModel.setMcv(33.33);
-        resultBloodServiceModel.setPlt(222.2);
-        resultBloodServiceModel.setSue(5);
-        resultBloodServiceModel.setWbc(853.3);
-        resultBloodServiceModel.setRbc(54);
-        resultBloodServiceModel.setDate("13/10/2019");
-        resultBloodServiceModel.setTime("20:00");
-        resultBloodServiceModel.setDescription("some description");
-        resultBloodService.createResultBlood(resultBloodServiceModel);
-
-        ResultIrmServiceModel resultIrmServiceModel=new ResultIrmServiceModel();
-        resultIrmServiceModel.setImg("/data/img");
-        resultIrmServiceModel.setDate("12/13/2019");
-        resultIrmServiceModel.setTime("15:14");
-        resultBloodServiceModel.setDescription("this is description");
-        resultIrmService.createResultIrm(resultIrmServiceModel);
 
     }
 
+
+    @GetMapping("/create-irm-result")
+    public ModelAndView register(@ModelAttribute ResultIrmBindingModel resultIrmBindingModel) {
+        return super.view("views/results/createirmresult");
+    }
+
+    @PostMapping("/create-irm-result")
+    public ModelAndView registerConfirm(@Valid @ModelAttribute ResultIrmBindingModel resultIrmBindingModel,
+                                        BindingResult bindingResult,
+                                        HttpServletRequest request) {
+
+        if (bindingResult.hasErrors()) {
+            return super.view("views/results/createirmresult");
+        }
+
+
+        ResultIrmServiceModel resultIrmServiceModel = this.modelMapper.map(resultIrmBindingModel, ResultIrmServiceModel.class);
+        this.resultIrmService.createResultIrm(resultIrmServiceModel);
+        return super.redirect("/examinations/pending");
+    }
+
+
+    @GetMapping("/create-blood-result")
+    public ModelAndView register(@ModelAttribute ResultBloodBindingModel resultBloodBindingModel) {
+        return super.view("views/results/createbloodresult");
+    }
+
+    @PostMapping("/create-blood-result")
+    public ModelAndView registerConfirm(@Valid @ModelAttribute ResultBloodBindingModel resultBloodBindingModel,
+                                        BindingResult bindingResult,
+                                        HttpServletRequest request) {
+
+        if (bindingResult.hasErrors()) {
+            return super.view("views/results/createbloodresult");
+        }
+
+        ResultBloodServiceModel resultBloodServiceModel = this.modelMapper.map(resultBloodBindingModel, ResultBloodServiceModel.class);
+        this.resultBloodService.createResultBlood(resultBloodServiceModel);
+        return super.redirect("/examinations/pending");
+    }
 
 
     @GetMapping("/resultsBlood")
@@ -94,55 +119,14 @@ public class ResultController extends BaseController {
 
     @GetMapping("")
     public ModelAndView resultsAll(Authentication auth){
-
         Set<ResultViewModel> resultViewModels = new TreeSet<>(Comparator.comparing(ResultViewModel::getId));
-        //if is not logged in
-        if(auth==null ){
-                return super.view("views/results/all-results",resultViewModels);
-        }
-        else {
-            Users user = (Users) auth.getPrincipal();
 
-            Set<Role> authorities = user.getAuthorities();
-            Role role = authorities.iterator().next();
+        this.resultService.listResults(auth).forEach(resultServiceModel -> {
+            ResultViewModel resultViewModel = this.modelMapper.
+                    map(resultServiceModel, (resultServiceModel instanceof ResultIrmServiceModel)?ResultIrmViewModel.class:ResultBloodViewModel.class);
+            resultViewModels.add(resultViewModel);
+        });
 
-
-            if (role.getAuthority().equals("PATIENT")) {
-                this.resultIrmService.findByPatient(user).forEach(resultIrmServiceModel -> {
-                    ResultIrmViewModel resultIrmViewModel = this.modelMapper.map(resultIrmServiceModel, ResultIrmViewModel.class);
-                    resultViewModels.add(resultIrmViewModel);
-                });
-
-                this.resultBloodService.findByPatient(user).forEach(resultBloodServiceModel -> {
-                    ResultBloodViewModel resultBloodViewModel = this.modelMapper.map(resultBloodServiceModel, ResultBloodViewModel.class);
-                    resultViewModels.add(resultBloodViewModel);
-                });
-            } else if (role.getAuthority().equals("DOCTOR")) {
-                if (user.getWard().getWardName().equals("Blood")) {
-                    this.resultBloodService.findAllResultsBlood().forEach(resultBloodServiceModel -> {
-                        ResultBloodViewModel resultBloodViewModel = this.modelMapper.map(resultBloodServiceModel, ResultBloodViewModel.class);
-                        resultViewModels.add(resultBloodViewModel);
-                    });
-
-                } else if (user.getWard().getWardName().equals("Irm")) {
-                    this.resultIrmService.findAllResultsIrm().forEach(resultIrmServiceModel -> {
-                        ResultIrmViewModel resultIrmViewModel = this.modelMapper.map(resultIrmServiceModel, ResultIrmViewModel.class);
-                        resultViewModels.add(resultIrmViewModel);
-                    });
-                }
-            } else {
-                this.resultIrmService.findAllResultsIrm().forEach(resultIrmServiceModel -> {
-                    ResultIrmViewModel resultIrmViewModel = this.modelMapper.map(resultIrmServiceModel, ResultIrmViewModel.class);
-                    resultViewModels.add(resultIrmViewModel);
-                });
-
-                this.resultBloodService.findAllResultsBlood().forEach(resultBloodServiceModel -> {
-                    ResultBloodViewModel resultBloodViewModel = this.modelMapper.map(resultBloodServiceModel, ResultBloodViewModel.class);
-                    resultViewModels.add(resultBloodViewModel);
-                });
-
-            }
-        }
         return super.view("views/results/all-results",resultViewModels);
     }
 

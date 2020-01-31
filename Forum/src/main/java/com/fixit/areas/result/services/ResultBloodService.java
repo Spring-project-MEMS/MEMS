@@ -5,7 +5,7 @@ import com.fixit.areas.users.entities.Users;
 
 import java.util.Set;
 
-public interface ResultBloodService extends ResultService {
+public interface ResultBloodService {
 
     public void createResultBlood(ResultBloodServiceModel resultBloodServiceModel);
     public Set<ResultBloodServiceModel> findAllResultsBlood();

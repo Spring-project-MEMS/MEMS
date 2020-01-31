@@ -1,13 +1,32 @@
 package com.fixit.areas.result.models.view;
 
+import com.fixit.areas.users.models.view.UsersViewModel;
+import com.fixit.areas.ward.models.view.WardViewModel;
+
 public abstract class ResultViewModel {
 
     private Long id;
-
     private String description;
-    private Long wardId;
     private String date;
     private String time;
+    private WardViewModel ward;
+    private UsersViewModel patient;
+
+    public WardViewModel getWard() {
+        return ward;
+    }
+
+    public void setWard(WardViewModel ward) {
+        this.ward = ward;
+    }
+
+    public UsersViewModel getPatient() {
+        return patient;
+    }
+
+    public void setPatient(UsersViewModel patient) {
+        this.patient = patient;
+    }
 
     public ResultViewModel() {
     }
@@ -19,15 +38,6 @@ public abstract class ResultViewModel {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public Long getWardId() {
-        return wardId;
-    }
-
-    public void setWardId(Long wardId) {
-        this.wardId = wardId;
-    }
-
 
     public String getDescription() {
         return description;
