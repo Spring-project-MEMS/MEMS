@@ -3,6 +3,7 @@ package com.fixit.areas.users.services;
 import com.fixit.areas.role.entities.Role;
 import com.fixit.areas.users.models.service.UsersServiceModel;
 import com.fixit.areas.users.models.view.UserManageViewModel;
+import com.fixit.areas.users.models.view.UserMedicalRecordViewModel;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -27,4 +28,6 @@ public interface UsersService extends UserDetailsService {
     void lockUser(String username);
 
     void unlockUser(String username);
+
+    UserMedicalRecordViewModel getAllResultsByUsername(String username);
 }

@@ -4,6 +4,7 @@ import com.fixit.abstractions.controller.BaseController;
 import com.fixit.areas.users.models.binding.UsersRegisterBindingModel;
 import com.fixit.areas.users.models.service.UsersServiceModel;
 import com.fixit.areas.users.models.view.UserManageViewModel;
+import com.fixit.areas.users.models.view.UserMedicalRecordViewModel;
 import com.fixit.areas.users.services.UsersService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,12 +112,11 @@ public class UsersController extends BaseController {
         return super.redirect("/");
     }
 
-//    @GetMapping("/user/{username}")
-//    public ModelAndView userProfile(@PathVariable String username) {
-//        UsersServiceModel userServiceModel = this.userService.findByUsername(username);
-//        UserProfileViewModel userProfileViewModel = this.modelMapper.map(userServiceModel, UserProfileViewModel.class);
-//        return super.view("/views/user/profile", userProfileViewModel);
-//    }
+    @GetMapping("/users/{username}")
+    public ModelAndView userProfile(@PathVariable String username) {
+        UserMedicalRecordViewModel userProfileViewModel = this.usersService.getAllResultsByUsername(username);
+        return super.view("/views/user/medical-record", userProfileViewModel);
+    }
 
     @GetMapping("/login")
     public ModelAndView login(String error, ModelAndView mav) {
