@@ -1,7 +1,10 @@
 package com.fixit.areas.appointments.repositories;
 
 import com.fixit.areas.appointments.entities.Appointment;
+import com.fixit.areas.users.entities.Users;
 import com.fixit.areas.ward.entities.Ward;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,4 +18,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     Set<Appointment> findAllByDate(String date);
 
     Set<Appointment> findAllByDateAndWard(String date, Ward ward);
+
+    //Set<Appointment> findAllByUsers(Users user);
+    //Page<Appointment> findAllByUsers(Users user, Pageable pageable);
 }

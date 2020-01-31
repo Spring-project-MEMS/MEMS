@@ -1,0 +1,21 @@
+<div class="container" xmlns:th="http://www.thymeleaf.org">
+    <div class="row">
+        <div class="col-lg-8">
+
+            <!-- RENDER EXAMINATIONS -->
+            <th:block th:each="appointment : ${viewModel}">
+                <th:block th:include="~{fragments/appointments/all/single-appointment}"/>
+            </th:block>
+
+            <!-- PAGINATION -->
+            <div th:if="${viewModel.getTotalElements()} > 0">
+                <th:block th:include="~{fragments/appointments/all/pagination}"/>
+            </div>
+
+            <!-- MESSAGE FOR MISSING EXAMINATIONS-->
+            <th:block th:include="~{fragments/appointments/all/message}"/>
+
+        </div>
+        <th:block th:include="~{fragments/sidebar-status}"/>
+    </div>
+</div>

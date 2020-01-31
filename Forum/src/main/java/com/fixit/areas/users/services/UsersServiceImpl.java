@@ -1,11 +1,16 @@
 package com.fixit.areas.users.services;
 
+import com.fixit.areas.result.models.view.ResultBloodViewModel;
+import com.fixit.areas.result.models.view.ResultIrmViewModel;
+import com.fixit.areas.result.services.ResultBloodService;
+import com.fixit.areas.result.services.ResultIrmService;
 import com.fixit.areas.role.entities.Role;
 import com.fixit.areas.role.models.service.RoleServiceModel;
 import com.fixit.areas.role.services.RoleService;
 import com.fixit.areas.users.entities.Users;
 import com.fixit.areas.users.models.service.UsersServiceModel;
 import com.fixit.areas.users.models.view.UserManageViewModel;
+import com.fixit.areas.users.models.view.UserMedicalRecordViewModel;
 import com.fixit.areas.users.repositories.UsersRepository;
 import com.fixit.areas.ward.entities.Ward;
 import com.fixit.areas.ward.models.service.WardServiceModel;
@@ -19,6 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -30,14 +36,18 @@ public class UsersServiceImpl implements UsersService {
     private final ModelMapper modelMapper;
     private final RoleService roleService;
     private final WardService wardService;
+    private final ResultBloodService resultBloodService;
+    private final ResultIrmService resultIrmService;
 
     @Autowired
-    public UsersServiceImpl(UsersRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ModelMapper modelMapper, RoleService roleService, WardService wardService) {
+    public UsersServiceImpl(UsersRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ModelMapper modelMapper, RoleService roleService, WardService wardService, ResultBloodService resultBloodService, ResultIrmService resultIrmService) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.modelMapper = modelMapper;
         this.roleService = roleService;
         this.wardService = wardService;
+        this.resultBloodService = resultBloodService;
+        this.resultIrmService = resultIrmService;
     }
 
     @Override
@@ -173,5 +183,30 @@ public class UsersServiceImpl implements UsersService {
             userEntity.setAccountNonLocked(true);
             this.userRepository.save(userEntity);
         }
+    }
+
+    @Override
+    public UserMedicalRecordViewModel getAllResultsByUsername(String username) {
+        Users userEntity = this.userRepository.findOneByUsername(username);
+        UserMedicalRecordViewModel userMedicalRecordViewModel = new UserMedicalRecordViewModel();
+        userMedicalRecordViewModel.setEgn(userEntity.getEgn());
+        userMedicalRecordViewModel.setFirstName(userEntity.getFirstName());
+        userMedicalRecordViewModel.setLastName(userEntity.getLastName());
+        userMedicalRecordViewModel.setUsername(userEntity.getUsername());
+        Set<ResultBloodViewModel> bloodResults = new HashSet<>();
+        Set<ResultIrmViewModel> irmResults = new HashSet<>();
+        resultIrmService.findByPatient(userEntity).forEach(resultIrmServiceModel -> {
+            ResultIrmViewModel resultIrmViewModel = this.modelMapper.map(resultIrmServiceModel, ResultIrmViewModel.class);
+            irmResults.add(resultIrmViewModel);
+        });
+
+        this.resultBloodService.findByPatient(userEntity).forEach(resultBloodServiceModel -> {
+            ResultBloodViewModel resultBloodViewModel = this.modelMapper.map(resultBloodServiceModel, ResultBloodViewModel.class);
+            bloodResults.add(resultBloodViewModel);
+        });
+
+        userMedicalRecordViewModel.setBloodResults(bloodResults);
+        userMedicalRecordViewModel.setIrmResults(irmResults);
+        return userMedicalRecordViewModel;
     }
 }
