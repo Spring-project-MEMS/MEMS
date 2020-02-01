@@ -29,6 +29,7 @@ public class ResultServiceModel {
         this.ward = ward;
     }
 
+
     public String getDate() {
         return date;
     }

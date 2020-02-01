@@ -49,18 +49,13 @@ public class ResultController extends BaseController {
 
 
     @GetMapping("/create-irm-result")
-    public ModelAndView register(@ModelAttribute ResultIrmBindingModel resultIrmBindingModel) {
+    public ModelAndView createResultIrm(@ModelAttribute ResultIrmBindingModel resultIrmBindingModel) {
         return super.view("views/results/createirmresult");
     }
 
     @PostMapping("/create-irm-result")
-    public ModelAndView registerConfirm(@Valid @ModelAttribute ResultIrmBindingModel resultIrmBindingModel,
-                                        BindingResult bindingResult,
-                                        HttpServletRequest request) {
-
-        if (bindingResult.hasErrors()) {
-            return super.view("views/results/createirmresult");
-        }
+    public ModelAndView persistResultIrm(@Valid @ModelAttribute ResultIrmBindingModel resultIrmBindingModel,
+                                        BindingResult bindingResult) {
 
 
         ResultIrmServiceModel resultIrmServiceModel = this.modelMapper.map(resultIrmBindingModel, ResultIrmServiceModel.class);
@@ -70,12 +65,12 @@ public class ResultController extends BaseController {
 
 
     @GetMapping("/create-blood-result")
-    public ModelAndView register(@ModelAttribute ResultBloodBindingModel resultBloodBindingModel) {
+    public ModelAndView createResultBlood(@ModelAttribute ResultBloodBindingModel resultBloodBindingModel) {
         return super.view("views/results/createbloodresult");
     }
 
     @PostMapping("/create-blood-result")
-    public ModelAndView registerConfirm(@Valid @ModelAttribute ResultBloodBindingModel resultBloodBindingModel,
+    public ModelAndView persistResultBlood(@Valid @ModelAttribute ResultBloodBindingModel resultBloodBindingModel,
                                         BindingResult bindingResult,
                                         HttpServletRequest request) {
 

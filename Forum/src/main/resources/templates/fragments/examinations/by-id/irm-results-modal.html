@@ -16,10 +16,11 @@
                     <p> Img: <input name="img" type="text" ></p>
                     <input type="hidden" name="date" th:value="${examination.date}"/>
                     <input type="hidden" name="time" th:value="${examination.time}"/>
-                    <input type="hidden" name="patient" th:value="${examination.patient}"/>
-                    <input type="hidden" name="ward" th:value="${examination.ward}"/>
+                    <input type="hidden" name="patient" th:value="${examination.patient.id}"/>
 
-                    <button type="submit" class="btn btn-danger">Finish</button>
+                    <input type="hidden" name="ward" th:value="${examination.ward.id}"/>
+
+                    <button type="submit" class="btn btn-danger">Submit</button>
                 </form>
 
             </div>

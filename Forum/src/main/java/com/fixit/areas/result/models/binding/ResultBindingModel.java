@@ -1,6 +1,8 @@
 package com.fixit.areas.result.models.binding;
 
 
+import com.fixit.areas.users.entities.Users;
+import com.fixit.areas.ward.entities.Ward;
 import com.fixit.constants.Constants;
 
 import javax.validation.constraints.Size;
@@ -13,18 +15,25 @@ public class ResultBindingModel {
     private String date;
     private String time;
 
+    private Users patient;
+    private Ward ward;
 
-
-
-    public Long getWardId() {
-        return wardId;
+    public Ward getWard() {
+        return ward;
     }
 
-    public void setWardId(Long wardId) {
-        this.wardId = wardId;
+    public void setWard(Ward ward) {
+        this.ward = ward;
     }
 
-    private Long wardId;
+    public Users getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Users patient) {
+        this.patient = patient;
+    }
+
     public String getDate() {
         return date;
     }
