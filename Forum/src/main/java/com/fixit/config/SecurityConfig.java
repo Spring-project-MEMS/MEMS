@@ -2,6 +2,7 @@ package com.fixit.config;
 import com.fixit.areas.users.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,8 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/wards/create", "/logs/all").hasAnyAuthority("ADMIN")
-                .antMatchers("/login", "/register", "/user/login" , "/user/register").anonymous()
+                .antMatchers(HttpMethod.GET,"/appointments", "/examinations/**", "/results/**").authenticated()
+                .antMatchers(HttpMethod.POST, "/examinations/**", "/results/**").hasAnyAuthority("ADMIN", "DOCTOR")
+                .antMatchers("/wards/create", "/logs/**", "/manage/**","/lock/**","/unlock/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/users/createadmin", "/users/createpatient", "/users/createdoctor").hasAnyAuthority("ADMIN")
+                .antMatchers("/users/**","/wards/**").authenticated()
+                .antMatchers("/login", "/register").anonymous()
                 .antMatchers("/", "/css/**", "/img/**", "/contact", "/about", "/product/**").permitAll()
                 .and()
                 .formLogin().loginPage("/login")
