@@ -3,6 +3,7 @@ package com.fixit.areas.users.models.view;
 public class UsersViewModel {
 
     private Long id;
+    private String username;
     private String firstName;
     private String lastName;
     private String egn;
@@ -16,6 +17,14 @@ public class UsersViewModel {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFirstName() {

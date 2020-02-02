@@ -11,18 +11,18 @@
             -->
         </div>
         <hr class="bg-info w-100">
-        <div>
-            <p class="text-wrap" th:text="${appointment.patient.firstName}"></p>
-            <p class="text-wrap" th:text="${appointment.patient.lastName}"></p>
-        </div>
+        <!--<div>-->
+            <!--<p class="text-wrap" th:text="${appointment.patient.firstName}"></p>-->
+            <!--<p class="text-wrap" th:text="${appointment.patient.lastName}"></p>-->
+        <!--</div>-->
     </div>
     <div class="row w-100">
         <div class="col-sm-6 col-md-6 col-lg-6">
             <i class="p-1 rounded bg-primary text-white" th:text="${appointment.patient.egn}"></i>
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6 avatar">
-            <a class="pull-right" th:href="|/users/${appointment.patient.id}|">
-                <h6 th:text="${appointment.patient.firstName}" class="text-dark d-inline-block"></h6>
+            <a class="pull-right" th:href="|/users/${appointment.patient.username}|">
+                <h6 th:text="|${appointment.patient.firstName} ${appointment.patient.lastName}|" class="text-dark d-inline-block"></h6>
                 <img src="/img/avatar__181424 (2).png" heght="512" width="512" class="d-inline-block"/>
             </a>
         </div>
