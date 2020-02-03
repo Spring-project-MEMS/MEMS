@@ -12,7 +12,7 @@
 
             <!-- PAGINATION -->
             <div th:if="${viewModel.getTotalElements()} > 0">
-                <th:block th:include="~{fragments/examinations/all/pagination}"/>
+                <th:block th:include="~{fragments/examinations/all/closed-pagination}"/>
             </div>
 
             <!-- MESSAGE FOR MISSING EXAMINATIONS-->
