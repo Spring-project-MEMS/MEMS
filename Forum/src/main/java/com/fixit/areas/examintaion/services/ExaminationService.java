@@ -3,6 +3,7 @@ package com.fixit.areas.examintaion.services;
 import com.fixit.areas.examintaion.models.service.ExaminationServiceModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 
 import java.util.Set;
 
@@ -13,10 +14,10 @@ public interface ExaminationService {
 
     Set<ExaminationServiceModel> findAll();
 
-    Page<ExaminationServiceModel> findAllOpen(Pageable pageable);
-    Page<ExaminationServiceModel> findAllProcessed(Pageable pageable);
-    Page<ExaminationServiceModel> findAllPending(Pageable pageable);
-    Page<ExaminationServiceModel> findAllClosed(Pageable pageable);
+    Page<ExaminationServiceModel> findAllOpen(Authentication authentication, Pageable pageable);
+    Page<ExaminationServiceModel> findAllProcessed(Authentication authentication, Pageable pageable);
+    Page<ExaminationServiceModel> findAllPending(Authentication authentication, Pageable pageable);
+    Page<ExaminationServiceModel> findAllClosed(Authentication authentication, Pageable pageable);
 
     void changeOpen(Long id);
     void changeProcessed(Long id);

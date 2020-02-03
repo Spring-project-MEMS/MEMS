@@ -3,12 +3,16 @@ package com.fixit.areas.examintaion.services;
 import com.fixit.areas.examintaion.enitities.Examination;
 import com.fixit.areas.examintaion.models.service.ExaminationServiceModel;
 import com.fixit.areas.examintaion.repositories.ExaminationRepository;
+import com.fixit.areas.users.entities.Users;
+import com.fixit.areas.users.services.UsersService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -29,12 +33,14 @@ public class ExaminationServiceImpl implements ExaminationService{
     private String statusClosed;
 
     private final ExaminationRepository examinationRepository;
+    private final UsersService usersService;
 
     private final ModelMapper modelMapper;
 
     @Autowired
-    public ExaminationServiceImpl(ExaminationRepository examinationRepository, ModelMapper modelMapper){
+    public ExaminationServiceImpl(ExaminationRepository examinationRepository, @Lazy UsersService usersService, ModelMapper modelMapper){
         this.examinationRepository = examinationRepository;
+        this.usersService = usersService;
         this.modelMapper = modelMapper;
     }
 
@@ -66,9 +72,20 @@ public class ExaminationServiceImpl implements ExaminationService{
     }
 
     @Override
-    public Page<ExaminationServiceModel> findAllOpen(Pageable pageable) {
+    public Page<ExaminationServiceModel> findAllOpen(Authentication authentication, Pageable pageable) {
 
-        Page<Examination> examinations = this.examinationRepository.findAllByStatus(statusOpen, pageable);
+        Users user = (Users) authentication.getPrincipal();
+        Page<Examination> examinations;
+        //Page<Examination> examinations = this.examinationRepository.findAllByStatus(statusOpen, pageable);
+
+        if (this.usersService.hasDoctorRights(authentication)){
+            examinations = this.examinationRepository.findAllByStatusAndWard(statusOpen, user.getWard(), pageable);
+        } else if (this.usersService.hasPatientRights(authentication)) {
+            examinations = this.examinationRepository.findAllByStatusAndPatient(statusOpen, user, pageable);
+        } else {
+            examinations = this.examinationRepository.findAllByStatus(statusOpen, pageable);
+        }
+
         List<ExaminationServiceModel> examinationServiceModelsList = new ArrayList<>();
 
         examinations.forEach(examination -> {
@@ -88,9 +105,20 @@ public class ExaminationServiceImpl implements ExaminationService{
     }
 
     @Override
-    public Page<ExaminationServiceModel> findAllProcessed(Pageable pageable) {
+    public Page<ExaminationServiceModel> findAllProcessed(Authentication authentication, Pageable pageable) {
 
-        Page<Examination> examinations = this.examinationRepository.findAllByStatus(statusProcessed, pageable);
+        Users user = (Users) authentication.getPrincipal();
+        Page<Examination> examinations;
+        //Page<Examination> examinations = this.examinationRepository.findAllByStatus(statusProcessed, pageable);
+
+        if (this.usersService.hasDoctorRights(authentication)){
+            examinations = this.examinationRepository.findAllByStatusAndWard(statusProcessed, user.getWard(), pageable);
+        } else if (this.usersService.hasPatientRights(authentication)) {
+            examinations = this.examinationRepository.findAllByStatusAndPatient(statusProcessed, user, pageable);
+        } else {
+            examinations = this.examinationRepository.findAllByStatus(statusProcessed, pageable);
+        }
+
         List<ExaminationServiceModel> examinationServiceModelsList = new ArrayList<>();
 
         examinations.forEach(examination -> {
@@ -110,9 +138,20 @@ public class ExaminationServiceImpl implements ExaminationService{
     }
 
     @Override
-    public Page<ExaminationServiceModel> findAllPending(Pageable pageable) {
+    public Page<ExaminationServiceModel> findAllPending(Authentication authentication, Pageable pageable) {
 
-        Page<Examination> examinations = this.examinationRepository.findAllByStatus(statusPending, pageable);
+        Users user = (Users) authentication.getPrincipal();
+        Page<Examination> examinations;
+        //Page<Examination> examinations = this.examinationRepository.findAllByStatus(statusPending, pageable);
+
+        if (this.usersService.hasDoctorRights(authentication)){
+            examinations = this.examinationRepository.findAllByStatusAndWard(statusPending, user.getWard(), pageable);
+        } else if (this.usersService.hasPatientRights(authentication)) {
+            examinations = this.examinationRepository.findAllByStatusAndPatient(statusPending, user, pageable);
+        } else {
+            examinations = this.examinationRepository.findAllByStatus(statusPending, pageable);
+        }
+
         List<ExaminationServiceModel> examinationServiceModelsList = new ArrayList<>();
 
         examinations.forEach(examination -> {
@@ -134,9 +173,20 @@ public class ExaminationServiceImpl implements ExaminationService{
     }
 
     @Override
-    public Page<ExaminationServiceModel> findAllClosed(Pageable pageable) {
+    public Page<ExaminationServiceModel> findAllClosed(Authentication authentication, Pageable pageable) {
 
-        Page<Examination> examinations = this.examinationRepository.findAllByStatus(statusClosed, pageable);
+        Users user = (Users) authentication.getPrincipal();
+        Page<Examination> examinations;
+        //Page<Examination> examinations = this.examinationRepository.findAllByStatus(statusClosed, pageable);
+
+        if (this.usersService.hasDoctorRights(authentication)){
+            examinations = this.examinationRepository.findAllByStatusAndWard(statusClosed, user.getWard(), pageable);
+        } else if (this.usersService.hasPatientRights(authentication)) {
+            examinations = this.examinationRepository.findAllByStatusAndPatient(statusClosed, user, pageable);
+        } else {
+            examinations = this.examinationRepository.findAllByStatus(statusClosed, pageable);
+        }
+
         List<ExaminationServiceModel> examinationServiceModelsList = new ArrayList<>();
 
         examinations.forEach(examination -> {

@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,9 +45,9 @@ public class ExaminationController extends BaseController {
     }
 
     @GetMapping("/open")
-    public ModelAndView allOpenExamination(@PageableDefault(size = 10) Pageable pageable){
+    public ModelAndView allOpenExamination(@PageableDefault(size = 10) Pageable pageable, Authentication authentication){
 
-        Page<ExaminationServiceModel> examinationServiceModels = this.examinationService.findAllOpen(pageable);
+        Page<ExaminationServiceModel> examinationServiceModels = this.examinationService.findAllOpen(authentication, pageable);
 
         List<ExaminationViewModel> examinationViewModelList = new ArrayList<>();
 
@@ -67,9 +68,9 @@ public class ExaminationController extends BaseController {
     }
 
     @GetMapping("/processed")
-    public ModelAndView allProcessedExamination(@PageableDefault(size = 10) Pageable pageable){
+    public ModelAndView allProcessedExamination(@PageableDefault(size = 10) Pageable pageable, Authentication authentication){
 
-        Page<ExaminationServiceModel> examinationServiceModels = this.examinationService.findAllProcessed(pageable);
+        Page<ExaminationServiceModel> examinationServiceModels = this.examinationService.findAllProcessed(authentication, pageable);
 
         List<ExaminationViewModel> examinationViewModelList = new ArrayList<>();
 
@@ -90,9 +91,9 @@ public class ExaminationController extends BaseController {
     }
 
     @GetMapping("/pending")
-    public ModelAndView allPendingExamination(@PageableDefault(size = 10) Pageable pageable){
+    public ModelAndView allPendingExamination(@PageableDefault(size = 10) Pageable pageable, Authentication authentication){
 
-        Page<ExaminationServiceModel> examinationServiceModels = this.examinationService.findAllPending(pageable);
+        Page<ExaminationServiceModel> examinationServiceModels = this.examinationService.findAllPending(authentication, pageable);
 
         List<ExaminationViewModel> examinationViewModelList = new ArrayList<>();
 
@@ -113,9 +114,9 @@ public class ExaminationController extends BaseController {
     }
 
     @GetMapping("/closed")
-    public ModelAndView allClosedExamination(@PageableDefault(size = 10) Pageable pageable){
+    public ModelAndView allClosedExamination(@PageableDefault(size = 10) Pageable pageable, Authentication authentication){
 
-        Page<ExaminationServiceModel> examinationServiceModels = this.examinationService.findAllClosed(pageable);
+        Page<ExaminationServiceModel> examinationServiceModels = this.examinationService.findAllClosed(authentication ,pageable);
 
         List<ExaminationViewModel> examinationViewModelList = new ArrayList<>();
 
