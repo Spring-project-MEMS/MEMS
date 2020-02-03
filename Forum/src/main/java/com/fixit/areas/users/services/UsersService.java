@@ -21,6 +21,10 @@ public interface UsersService extends UserDetailsService {
 
     boolean hasAdminRights(Authentication authentication);
 
+    boolean hasDoctorRights(Authentication authentication);
+
+    boolean hasPatientRights(Authentication authentication);
+
     List<UserManageViewModel> getAllUsersToManage();
 
     UserManageViewModel manageByUsername(String username);

@@ -127,6 +127,26 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
+    public boolean hasDoctorRights(Authentication authentication) {
+        List<String> authoritiesList = new ArrayList<String>();
+        authentication.getAuthorities().forEach(auth -> {
+            authoritiesList.add(auth.getAuthority());
+        });
+
+        return authoritiesList.contains("DOCTOR");
+    }
+
+    @Override
+    public boolean hasPatientRights(Authentication authentication) {
+        List<String> authoritiesList = new ArrayList<String>();
+        authentication.getAuthorities().forEach(auth -> {
+            authoritiesList.add(auth.getAuthority());
+        });
+
+        return authoritiesList.contains("PATIENT");
+    }
+
+    @Override
     public List<UserManageViewModel> getAllUsersToManage() {
 
         List<UserManageViewModel> userManageViewModels = new ArrayList<>();

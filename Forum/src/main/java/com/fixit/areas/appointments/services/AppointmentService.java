@@ -13,6 +13,6 @@ public interface AppointmentService {
     AppointmentServiceModel create(AppointmentServiceModel appointmentServiceModel);
 
     Set<AppointmentServiceModel> findAllByDateAndWard(String date, Ward ward);
-    Page<AppointmentServiceModel> findAllAppointments(Pageable pageable);
+    Page<AppointmentServiceModel> findAllAppointments(Authentication authentication, Pageable pageable);
     //Set<AppointmentServiceModel> findAllByUser(String username);
 }

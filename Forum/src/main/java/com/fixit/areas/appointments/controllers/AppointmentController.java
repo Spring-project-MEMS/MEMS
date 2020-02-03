@@ -39,9 +39,9 @@ public class AppointmentController extends BaseController {
     }
 
     @GetMapping("")
-    public ModelAndView allAppointments(@PageableDefault(size = 10) Pageable pageable){
+    public ModelAndView allAppointments(@PageableDefault(size = 10) Pageable pageable, Authentication authentication){
 
-        Page<AppointmentServiceModel> appointmentServiceModels = this.appointmentService.findAllAppointments(pageable);
+        Page<AppointmentServiceModel> appointmentServiceModels = this.appointmentService.findAllAppointments(authentication, pageable);
 
         List<AppointmentViewModel> appointmentViewModelList = new ArrayList<>();
 

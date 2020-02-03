@@ -9,6 +9,7 @@ import com.fixit.areas.users.services.UsersService;
 import com.fixit.areas.ward.entities.Ward;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -24,12 +25,14 @@ import java.util.Set;
 public class AppointmentServiceImpl implements AppointmentService{
 
     private final AppointmentRepository appointmentRepository;
+    private final UsersService usersService;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public AppointmentServiceImpl(AppointmentRepository appointmentRepository, ModelMapper modelMapper) {
+    public AppointmentServiceImpl(AppointmentRepository appointmentRepository, @Lazy UsersService usersService, ModelMapper modelMapper) {
 
         this.appointmentRepository = appointmentRepository;
+        this.usersService = usersService;
         this.modelMapper = modelMapper;
     }
 
@@ -52,9 +55,19 @@ public class AppointmentServiceImpl implements AppointmentService{
     }
 
     @Override
-    public Page<AppointmentServiceModel> findAllAppointments(Pageable pageable) {
+    public Page<AppointmentServiceModel> findAllAppointments(Authentication authentication, Pageable pageable) {
 
-        Page<Appointment> appointments = this.appointmentRepository.findAll(pageable);
+        Users user = (Users) authentication.getPrincipal();
+        Page<Appointment> appointments;
+        //Page<Appointment> appointments = this.appointmentRepository.findAll(pageable);
+
+        if (this.usersService.hasDoctorRights(authentication)){
+            appointments = this.appointmentRepository.findAllByWard(user.getWard(), pageable);
+        } else if (this.usersService.hasPatientRights(authentication)) {
+            appointments = this.appointmentRepository.findAllByPatient(user, pageable);
+        } else {
+            appointments = this.appointmentRepository.findAll(pageable);
+        }
 
         List<AppointmentServiceModel> appointmentServiceModelsList = new ArrayList<>();
 

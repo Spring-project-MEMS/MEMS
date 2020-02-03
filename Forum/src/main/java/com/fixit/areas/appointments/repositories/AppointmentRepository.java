@@ -19,6 +19,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     Set<Appointment> findAllByDateAndWard(String date, Ward ward);
 
-    //Set<Appointment> findAllByUsers(Users user);
-    //Page<Appointment> findAllByUsers(Users user, Pageable pageable);
+    Page<Appointment> findAllByPatient(Users patient, Pageable pageable);
+
+    Page<Appointment> findAllByWard(Ward ward, Pageable pageable);
 }
