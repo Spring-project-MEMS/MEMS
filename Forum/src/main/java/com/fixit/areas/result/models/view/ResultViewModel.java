@@ -3,7 +3,7 @@ package com.fixit.areas.result.models.view;
 import com.fixit.areas.users.models.view.UsersViewModel;
 import com.fixit.areas.ward.models.view.WardViewModel;
 
-public abstract class ResultViewModel {
+public class ResultViewModel {
 
     private Long id;
     private String description;
@@ -11,22 +11,6 @@ public abstract class ResultViewModel {
     private String time;
     private WardViewModel ward;
     private UsersViewModel patient;
-
-    public WardViewModel getWard() {
-        return ward;
-    }
-
-    public void setWard(WardViewModel ward) {
-        this.ward = ward;
-    }
-
-    public UsersViewModel getPatient() {
-        return patient;
-    }
-
-    public void setPatient(UsersViewModel patient) {
-        this.patient = patient;
-    }
 
     public ResultViewModel() {
     }
@@ -47,8 +31,6 @@ public abstract class ResultViewModel {
         this.description = description;
     }
 
-    public abstract ResultType getType();
-
     public String getDate() {
         return date;
     }
@@ -63,5 +45,21 @@ public abstract class ResultViewModel {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public WardViewModel getWard() {
+        return ward;
+    }
+
+    public void setWard(WardViewModel ward) {
+        this.ward = ward;
+    }
+
+    public UsersViewModel getPatient() {
+        return patient;
+    }
+
+    public void setPatient(UsersViewModel patient) {
+        this.patient = patient;
     }
 }

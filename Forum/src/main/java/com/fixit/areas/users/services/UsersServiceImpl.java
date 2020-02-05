@@ -215,12 +215,12 @@ public class UsersServiceImpl implements UsersService {
         userMedicalRecordViewModel.setUsername(userEntity.getUsername());
         Set<ResultBloodViewModel> bloodResults = new HashSet<>();
         Set<ResultIrmViewModel> irmResults = new HashSet<>();
-        resultIrmService.findByPatient(userEntity).forEach(resultIrmServiceModel -> {
+        resultIrmService.findAllByPatient(userEntity).forEach(resultIrmServiceModel -> {
             ResultIrmViewModel resultIrmViewModel = this.modelMapper.map(resultIrmServiceModel, ResultIrmViewModel.class);
             irmResults.add(resultIrmViewModel);
         });
 
-        this.resultBloodService.findByPatient(userEntity).forEach(resultBloodServiceModel -> {
+        this.resultBloodService.findAllByPatient(userEntity).forEach(resultBloodServiceModel -> {
             ResultBloodViewModel resultBloodViewModel = this.modelMapper.map(resultBloodServiceModel, ResultBloodViewModel.class);
             bloodResults.add(resultBloodViewModel);
         });

@@ -9,6 +9,7 @@ import com.fixit.areas.result.models.service.ResultServiceModel;
 import com.fixit.areas.result.repositories.ResultRepository;
 import com.fixit.areas.role.entities.Role;
 import com.fixit.areas.users.entities.Users;
+import com.fixit.areas.users.services.UsersService;
 import com.fixit.areas.ward.entities.Ward;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
@@ -17,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -24,69 +26,69 @@ import java.util.Set;
 public class ResultServiceImpl implements ResultService {
 
     private final ResultRepository resultRepository;
+    private final UsersService usersService;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public ResultServiceImpl(ResultRepository resultRepository, ModelMapper modelMapper) {
+    public ResultServiceImpl(ResultRepository resultRepository, UsersService usersService, ModelMapper modelMapper) {
         this.resultRepository = resultRepository;
+        this.usersService = usersService;
         this.modelMapper = modelMapper;
     }
 
-
     @Override
-    public Set<ResultServiceModel> findAllResults() {
+    public Set<ResultServiceModel> findAllResults(Authentication authentication) {
+
+        Users user = (Users) authentication.getPrincipal();
+        Set<Result> results;
+
+        if (this.usersService.hasDoctorRights(authentication)){
+            results = this.resultRepository.findAllByWard(user.getWard());
+        } else if (this.usersService.hasPatientRights(authentication)) {
+            results = this.resultRepository.findAllByPatient(user);
+        } else {
+            results = new HashSet<>(this.resultRepository.findAll());
+        }
 
         Set<ResultServiceModel> resultServiceModels = new HashSet<>();
 
-        this.resultRepository.findAll().forEach(result -> {
-            ResultServiceModel resultServiceModel=this.modelMapper
-                    .map(result,(result instanceof  ResultIrm)?ResultIrmServiceModel.class:ResultBloodServiceModel.class);
-                    resultServiceModels.add(resultServiceModel);
-        });
-        return resultServiceModels;
-    }
-
-
-    @Override
-    public Set<ResultServiceModel> findByPatient(Users patient) {
-        Set<ResultServiceModel> resultServiceModels=new HashSet<>();
-
-        this.resultRepository.findAllByPatient(patient).forEach(result -> {
-            ResultServiceModel resultServiceModel =this.modelMapper
-                    .map(result,(result instanceof ResultIrm)? ResultIrmServiceModel.class :ResultBloodServiceModel.class);
+        results.forEach(result -> {
+            ResultServiceModel resultServiceModel = this.modelMapper.map(result, ResultServiceModel.class);
             resultServiceModels.add(resultServiceModel);
         });
+
         return resultServiceModels;
     }
 
     @Override
-    public Set<ResultServiceModel> findByWard(Ward ward) {
+    public Set<ResultServiceModel> findAllByPatient(Users patient) {
+
+        Set<ResultServiceModel> resultServiceModels = new HashSet<>();
+
+        this.resultRepository.findAllByPatient(patient).forEach(result -> {
+            ResultServiceModel resultServiceModel = this.modelMapper.map(result, ResultServiceModel.class);
+            resultServiceModels.add(resultServiceModel);
+        });
+
+        return resultServiceModels;
+    }
+
+    @Override
+    public Set<ResultServiceModel> findAllByWard(Ward ward) {
+
         Set<ResultServiceModel> resultServiceModels = new HashSet<>();
 
         this.resultRepository.findAllByWard(ward).forEach(result -> {
-            ResultServiceModel resultServiceModel = this.modelMapper
-                    .map(result, (result instanceof ResultIrm) ? ResultIrmServiceModel.class : ResultBloodServiceModel.class);
+            ResultServiceModel resultServiceModel = this.modelMapper.map(result, ResultServiceModel.class);
             resultServiceModels.add(resultServiceModel);
         });
+
         return resultServiceModels;
     }
 
     @Override
-    public Set<ResultServiceModel> listResults(Authentication auth) {
-        Users user = (Users) auth.getPrincipal();
-        Set<Role> authorities = user.getAuthorities();
-        Role role = authorities.iterator().next();
-
-        if (role.getAuthority().equals("PATIENT")) {
-            return  findByPatient(user);
-        }
-        else if(role.getAuthority().equals("DOCTOR")){
-            return findByWard(user.getWard());
-        }
-        else
-            return findAllResults();
-
+    public ResultServiceModel findById(Long id) {
+        Result result = this.resultRepository.findById(id).orElse(null);
+        return this.modelMapper.map(result, ResultServiceModel.class);
     }
-
 }
-

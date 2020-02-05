@@ -13,22 +13,27 @@ public class ResultServiceModel {
     private WardServiceModel ward;
     private UsersServiceModel patient;
 
-    public UsersServiceModel getPatient() {
-        return patient;
+    //probably need to add this service modal
+    //private ExaminationServiceModel examination;
+
+    public ResultServiceModel() {
     }
 
-    public void setPatient(UsersServiceModel patient) {
-        this.patient = patient;
+    public Long getId() {
+        return id;
     }
 
-    public WardServiceModel getWard() {
-        return ward;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setWard(WardServiceModel ward) {
-        this.ward = ward;
+    public String getDescription() {
+        return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getDate() {
         return date;
@@ -46,23 +51,19 @@ public class ResultServiceModel {
         this.time = time;
     }
 
-    public ResultServiceModel() {
+    public WardServiceModel getWard() {
+        return ward;
     }
 
-    public Long getId() {
-        return id;
+    public void setWard(WardServiceModel ward) {
+        this.ward = ward;
     }
 
-    public String getDescription() {
-        return description;
+    public UsersServiceModel getPatient() {
+        return patient;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPatient(UsersServiceModel patient) {
+        this.patient = patient;
     }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
 }

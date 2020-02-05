@@ -1,13 +1,19 @@
 package com.fixit.areas.result.services;
 
+import com.fixit.areas.result.models.binding.ResultIrmBindingModel;
 import com.fixit.areas.result.models.service.ResultIrmServiceModel;
 import com.fixit.areas.users.entities.Users;
+import com.fixit.areas.ward.entities.Ward;
+
 import java.util.Set;
 
 public interface ResultIrmService  {
-    void createResultIrm(ResultIrmServiceModel resultIrmServiceModel);
-    Set<ResultIrmServiceModel> findByPatient(Users patient);
-    Set<ResultIrmServiceModel> findAllResultsIrm();
-    ResultIrmServiceModel findById(Long id);
 
+    void createResultIrm(ResultIrmBindingModel resultIrmBindingModel);
+    Set<ResultIrmServiceModel> findAllResultsIrm();
+    // REFACTOR THIS METHOD
+    Set<ResultIrmServiceModel> findAllByPatient(Users patient);
+    // REFACTOR THIS METHOD
+    Set<ResultIrmServiceModel> findAllByWard(Ward ward);
+    ResultIrmServiceModel findById(Long id);
 }

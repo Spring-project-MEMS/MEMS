@@ -1,6 +1,8 @@
 package com.fixit.areas.examintaion.services;
 
 import com.fixit.areas.examintaion.models.service.ExaminationServiceModel;
+import com.fixit.areas.result.entities.Result;
+import com.fixit.areas.result.entities.ResultBlood;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -24,4 +26,5 @@ public interface ExaminationService {
     void changePending(Long id);
 
     void viewClosed(Long id);
+    void setResult(Long id, Result result);
 }

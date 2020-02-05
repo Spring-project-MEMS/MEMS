@@ -1,6 +1,7 @@
 package com.fixit.areas.result.models.view;
 
 public class ResultBloodViewModel extends ResultViewModel {
+
     private double wbc;
     private double rbc;
     private double hb;
@@ -11,13 +12,7 @@ public class ResultBloodViewModel extends ResultViewModel {
     private double ast;
     private double alt;
 
-
     public ResultBloodViewModel() {
-    }
-
-    @Override
-    public ResultType getType() {
-        return ResultType.BLOOD;
     }
 
     public double getWbc() {

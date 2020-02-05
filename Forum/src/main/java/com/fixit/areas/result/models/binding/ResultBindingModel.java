@@ -15,23 +15,16 @@ public class ResultBindingModel {
     private String date;
     private String time;
 
-    private Users patient;
-    private Ward ward;
+    private String patient;
+    private String ward;
+    private String examination;
 
-    public Ward getWard() {
-        return ward;
+    public String getDescription() {
+        return description;
     }
 
-    public void setWard(Ward ward) {
-        this.ward = ward;
-    }
-
-    public Users getPatient() {
-        return patient;
-    }
-
-    public void setPatient(Users patient) {
-        this.patient = patient;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getDate() {
@@ -50,12 +43,27 @@ public class ResultBindingModel {
         this.time = time;
     }
 
-    public String getDescription() {
-        return description;
+    public String getPatient() {
+        return patient;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPatient(String patient) {
+        this.patient = patient;
     }
 
+    public String getWard() {
+        return ward;
+    }
+
+    public void setWard(String ward) {
+        this.ward = ward;
+    }
+
+    public String getExamination() {
+        return examination;
+    }
+
+    public void setExamination(String examination) {
+        this.examination = examination;
+    }
 }

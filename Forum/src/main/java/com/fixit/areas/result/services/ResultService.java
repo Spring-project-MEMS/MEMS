@@ -9,9 +9,9 @@ import org.springframework.security.core.Authentication;
 import java.util.Set;
 
 public interface ResultService {
-    public Set<ResultServiceModel> findAllResults();
-    Set<ResultServiceModel> findByPatient(Users patient);
-    Set<ResultServiceModel> findByWard(Ward ward);
-
-    Set<ResultServiceModel> listResults(Authentication auth);
+    Set<ResultServiceModel> findAllResults(Authentication authentication);
+    Set<ResultServiceModel> findAllByPatient(Users patient);
+    Set<ResultServiceModel> findAllByWard(Ward ward);
+    ResultServiceModel findById(Long id);
+    //Set<ResultServiceModel> listResults(Authentication auth);
 }

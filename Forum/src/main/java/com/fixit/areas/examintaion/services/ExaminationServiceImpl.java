@@ -3,6 +3,8 @@ package com.fixit.areas.examintaion.services;
 import com.fixit.areas.examintaion.enitities.Examination;
 import com.fixit.areas.examintaion.models.service.ExaminationServiceModel;
 import com.fixit.areas.examintaion.repositories.ExaminationRepository;
+import com.fixit.areas.result.entities.Result;
+import com.fixit.areas.result.entities.ResultBlood;
 import com.fixit.areas.users.entities.Users;
 import com.fixit.areas.users.services.UsersService;
 import org.modelmapper.ModelMapper;
@@ -203,5 +205,13 @@ public class ExaminationServiceImpl implements ExaminationService{
         // TODO:
         // NEED TO SEE THE INFORMATION OF THE RESULT WITH THE WANTED ID
         Examination examination = this.examinationRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void setResult(Long id, Result result) {
+
+        Examination examination = this.examinationRepository.findById(id).orElse(null);
+        examination.setResult(result);
+        this.examinationRepository.save(examination);
     }
 }

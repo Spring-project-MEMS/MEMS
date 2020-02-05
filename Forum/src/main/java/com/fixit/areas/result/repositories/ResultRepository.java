@@ -11,5 +11,4 @@ import java.util.Set;
 public interface ResultRepository extends BaseResultRepository<Result> {
     Set<Result> findAllByPatient(Users user);
     Set<Result> findAllByWard(Ward ward);
-
 }
