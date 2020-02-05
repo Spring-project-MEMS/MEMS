@@ -12,7 +12,7 @@
                         <p th:text="|from ${result.date} ${result.time}|"></p>
                     </div>
                     <div class="card-footer">
-                        <a th:href="@{/results/BLOOD?id={id}(id=${result.id})}" class="btn btn-link">View Result</a>
+                        <a th:href="@{/results/{id}(id=${result.id})}" class="btn btn-link">View Result</a>
                     </div>
                 </div>
                 <hr>
@@ -24,7 +24,7 @@
                         <p th:text="|from ${result.date} ${result.time}|"></p>
                     </div>
                     <div class="card-footer">
-                        <a th:href="@{/results/IRM?id={id}(id=${result.id})}" class="btn btn-link">View Result</a>
+                        <a th:href="@{/results/{id}(id=${result.id})}" class="btn btn-link">View Result</a>
                     </div>
                 </div>
                 <hr>
