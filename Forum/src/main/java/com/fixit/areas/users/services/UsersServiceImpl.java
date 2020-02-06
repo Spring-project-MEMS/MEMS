@@ -206,6 +206,11 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
+    public long counterAllUsers() {
+        return this.userRepository.count();
+    }
+
+    @Override
     public UserMedicalRecordViewModel getAllResultsByUsername(String username) {
         Users userEntity = this.userRepository.findOneByUsername(username);
         UserMedicalRecordViewModel userMedicalRecordViewModel = new UserMedicalRecordViewModel();

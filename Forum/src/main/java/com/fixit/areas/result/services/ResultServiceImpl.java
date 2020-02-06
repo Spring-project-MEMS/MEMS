@@ -91,4 +91,9 @@ public class ResultServiceImpl implements ResultService {
         Result result = this.resultRepository.findById(id).orElse(null);
         return this.modelMapper.map(result, ResultServiceModel.class);
     }
+
+    @Override
+    public long counterAllResults() {
+        return this.resultRepository.count();
+    }
 }

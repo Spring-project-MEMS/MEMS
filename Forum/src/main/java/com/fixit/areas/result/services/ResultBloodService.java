@@ -15,4 +15,6 @@ public interface ResultBloodService {
     Set<ResultBloodServiceModel> findAllByPatient(Users patient);
     Set<ResultBloodServiceModel> findAllByWard(Ward ward);
     ResultBloodServiceModel findById(Long id);
+
+    long counterAllResultsBlood();
 }

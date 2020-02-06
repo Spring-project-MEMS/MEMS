@@ -13,4 +13,6 @@ public interface ResultService {
     Set<ResultServiceModel> findAllByPatient(Users patient);
     Set<ResultServiceModel> findAllByWard(Ward ward);
     ResultServiceModel findById(Long id);
+
+    long counterAllResults();
 }

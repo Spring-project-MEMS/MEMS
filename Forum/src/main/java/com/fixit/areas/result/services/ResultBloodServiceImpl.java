@@ -105,4 +105,9 @@ public class ResultBloodServiceImpl implements ResultBloodService {
         ResultBloodServiceModel resultBloodServiceModel = this.modelMapper.map(resultBlood, ResultBloodServiceModel.class);
         return resultBloodServiceModel;
     }
+
+    @Override
+    public long counterAllResultsBlood() {
+        return this.resultBloodRepository.count();
+    }
 }

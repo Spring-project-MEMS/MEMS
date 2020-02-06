@@ -33,5 +33,7 @@ public interface UsersService extends UserDetailsService {
 
     void unlockUser(String username);
 
+    long counterAllUsers();
+
     UserMedicalRecordViewModel getAllResultsByUsername(String username);
 }

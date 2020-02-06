@@ -105,4 +105,9 @@ public class ResultIrmServiceImpl implements ResultIrmService {
 
         return resultIrmServiceModel;
     }
+
+    @Override
+    public long counterAllResultsIrm() {
+        return this.resultIrmRepository.count();
+    }
 }

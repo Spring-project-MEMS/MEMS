@@ -11,6 +11,8 @@ public class DataWardCacheSingleton {
 
     private List<WardNamesViewModel> wards = new ArrayList<>();
 
+    private Statistics statistics = new Statistics();
+
     private DataWardCacheSingleton(){}
 
     public static DataWardCacheSingleton getInstance(){
@@ -21,8 +23,16 @@ public class DataWardCacheSingleton {
         return this.wards;
     }
 
+    public Statistics getStatistics(){
+        return this.statistics;
+    }
+
     public void addWard(WardNamesViewModel wardNamesViewModel) {
         this.wards.add(wardNamesViewModel);
+    }
+
+    public void addStatistics(Statistics statistics){
+        this.statistics = statistics;
     }
 
     public void addWards(List<WardNamesViewModel> wardNamesViewModels) {

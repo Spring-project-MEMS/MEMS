@@ -1,9 +1,14 @@
 package com.fixit.config;
+import com.fixit.areas.result.services.ResultBloodService;
+import com.fixit.areas.result.services.ResultIrmService;
+import com.fixit.areas.result.services.ResultService;
 import com.fixit.areas.role.models.service.RoleServiceModel;
 import com.fixit.areas.role.services.RoleService;
+import com.fixit.areas.users.services.UsersService;
 import com.fixit.areas.ward.models.view.WardNamesViewModel;
 import com.fixit.areas.ward.services.WardService;
 import com.fixit.cache.DataWardCacheSingleton;
+import com.fixit.cache.Statistics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -15,14 +20,21 @@ import java.util.List;
 @Component
 public class DataLoader implements ApplicationRunner {
 
+    private final UsersService usersService;
     private final RoleService roleService;
-
     private final WardService wardService;
+    private final ResultService resultService;
+    private final ResultBloodService resultBloodService;
+    private final ResultIrmService resultIrmService;
 
     @Autowired
-    public DataLoader(RoleService roleService, WardService wardService) {
+    public DataLoader(UsersService usersService, RoleService roleService, WardService wardService, ResultService resultService, ResultBloodService resultBloodService, ResultIrmService resultIrmService) {
+        this.usersService = usersService;
         this.roleService = roleService;
         this.wardService = wardService;
+        this.resultService = resultService;
+        this.resultBloodService = resultBloodService;
+        this.resultIrmService = resultIrmService;
     }
     public void run(ApplicationArguments args) {
         RoleServiceModel adminRole = this.roleService.findByAuthority("ADMIN");
@@ -55,5 +67,13 @@ public class DataLoader implements ApplicationRunner {
         });
 
         DataWardCacheSingleton.getInstance().addWards(wardNames);
+
+        Statistics statistics = new Statistics();
+        statistics.setCounterUsers(this.usersService.counterAllUsers());
+        statistics.setCounterResults(this.resultService.counterAllResults());
+        statistics.setCounterBloodResults(this.resultBloodService.counterAllResultsBlood());
+        statistics.setCounterIrmResults(this.resultIrmService.counterAllResultsIrm());
+
+        DataWardCacheSingleton.getInstance().addStatistics(statistics);
     }
 }
