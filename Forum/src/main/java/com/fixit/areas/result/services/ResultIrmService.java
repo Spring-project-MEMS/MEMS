@@ -11,9 +11,7 @@ public interface ResultIrmService  {
 
     void createResultIrm(ResultIrmBindingModel resultIrmBindingModel);
     Set<ResultIrmServiceModel> findAllResultsIrm();
-    // REFACTOR THIS METHOD
     Set<ResultIrmServiceModel> findAllByPatient(Users patient);
-    // REFACTOR THIS METHOD
     Set<ResultIrmServiceModel> findAllByWard(Ward ward);
     ResultIrmServiceModel findById(Long id);
 }

@@ -86,10 +86,16 @@ public class ResultBloodServiceImpl implements ResultBloodService {
     }
 
     @Override
-    public Set<ResultBloodServiceModel> findAllByWard(WardServiceModel wardServiceModel) {
+    public Set<ResultBloodServiceModel> findAllByWard(Ward ward) {
 
+        Set<ResultBloodServiceModel> resultBloodServiceModels = new HashSet<>();
 
-        return null;
+        this.resultBloodRepository.findAllByWard(ward).forEach(resultBlood -> {
+            ResultBloodServiceModel resultBloodServiceModel = this.modelMapper.map(resultBlood, ResultBloodServiceModel.class);
+            resultBloodServiceModels.add(resultBloodServiceModel);
+        });
+
+        return resultBloodServiceModels;
     }
 
     @Override

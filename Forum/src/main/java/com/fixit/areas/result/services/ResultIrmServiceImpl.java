@@ -60,35 +60,48 @@ public class ResultIrmServiceImpl implements ResultIrmService {
 
     @Override
     public Set<ResultIrmServiceModel> findAllResultsIrm() {
-        Set<ResultIrmServiceModel> resultIrmServiceModels=new HashSet<>();
 
-        this.resultIrmRepository.findAll().forEach(resultBlood -> {
-            ResultIrmServiceModel resultBloodServiceModel =this.modelMapper.map(resultBlood,ResultIrmServiceModel.class);
-            resultIrmServiceModels.add(resultBloodServiceModel);
+        Set<ResultIrmServiceModel> resultIrmServiceModels = new HashSet<>();
+
+        this.resultIrmRepository.findAll().forEach(resultIrm -> {
+            ResultIrmServiceModel resultIrmServiceModel = this.modelMapper.map(resultIrm,ResultIrmServiceModel.class);
+            resultIrmServiceModels.add(resultIrmServiceModel);
         });
+
         return resultIrmServiceModels;
     }
 
     @Override
     public Set<ResultIrmServiceModel> findAllByPatient(Users patient) {
-        Set<ResultIrmServiceModel> resultIrmServiceModels=new HashSet<>();
 
-        this.resultIrmRepository.findAllByPatient(patient).forEach(resultBlood -> {
-            ResultIrmServiceModel resultBloodServiceModel =this.modelMapper.map(resultBlood,ResultIrmServiceModel.class);
-            resultIrmServiceModels.add(resultBloodServiceModel);
+        Set<ResultIrmServiceModel> resultIrmServiceModels = new HashSet<>();
+
+        this.resultIrmRepository.findAllByPatient(patient).forEach(resultIrm -> {
+            ResultIrmServiceModel resultIrmServiceModel = this.modelMapper.map(resultIrm,ResultIrmServiceModel.class);
+            resultIrmServiceModels.add(resultIrmServiceModel);
         });
+
         return resultIrmServiceModels;
     }
 
     @Override
     public Set<ResultIrmServiceModel> findAllByWard(Ward ward) {
-        return null;
+
+        Set<ResultIrmServiceModel> resultIrmServiceModels = new HashSet<>();
+
+        this.resultIrmRepository.findAllByWard(ward).forEach(resultIrm -> {
+            ResultIrmServiceModel resultIrmServiceModel = this.modelMapper.map(resultIrm, ResultIrmServiceModel.class);
+            resultIrmServiceModels.add(resultIrmServiceModel);
+        });
+
+        return resultIrmServiceModels;
     }
 
     @Override
     public ResultIrmServiceModel findById(Long id) {
-        ResultIrm resultIrm=this.resultIrmRepository.findById(id).orElse(null);
-        ResultIrmServiceModel resultIrmServiceModel=this.modelMapper.map(resultIrm,ResultIrmServiceModel.class);
+
+        ResultIrm resultIrm = this.resultIrmRepository.findById(id).orElse(null);
+        ResultIrmServiceModel resultIrmServiceModel = this.modelMapper.map(resultIrm, ResultIrmServiceModel.class);
 
         return resultIrmServiceModel;
     }

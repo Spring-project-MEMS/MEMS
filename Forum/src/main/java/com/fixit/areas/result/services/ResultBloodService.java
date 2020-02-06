@@ -12,9 +12,7 @@ public interface ResultBloodService {
 
     void createResultBlood(ResultBloodBindingModel resultBloodBindingModel);
     Set<ResultBloodServiceModel> findAllResultsBlood();
-    // REFACTOR THIS METHOD
-    Set<ResultBloodServiceModel> findAllByPatient(Users patientName);
-    // REFACTOR THIS METHOD
-    Set<ResultBloodServiceModel> findAllByWard(WardServiceModel wardServiceModel);
+    Set<ResultBloodServiceModel> findAllByPatient(Users patient);
+    Set<ResultBloodServiceModel> findAllByWard(Ward ward);
     ResultBloodServiceModel findById(Long id);
 }
