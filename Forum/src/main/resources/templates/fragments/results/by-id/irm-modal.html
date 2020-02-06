@@ -9,7 +9,7 @@
             </div>
             <form method="post" th:action="@{/results/irm}" th:object="${resultIrmBindingModel}">
                 <div class="modal-body">
-                    <p>Enter result for this examination?</p>
+                    <p>Enter result for this examination:</p>
 
                     <label for="description" th:text="#{result.description}"></label>
                     <input type="text" class="form-control" id="description" name="description"/>
@@ -24,8 +24,8 @@
                     <input type="hidden" name="examination" th:value="${examination.id}"/>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger">Finish</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-outline-danger">Finish</button>
                 </div>
             </form>
         </div>

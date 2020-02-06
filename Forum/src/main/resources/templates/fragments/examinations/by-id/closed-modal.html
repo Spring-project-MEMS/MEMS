@@ -8,18 +8,21 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>This is the result of this examination.</p>
+                <p>The result of this examination is added.</p>
             </div>
 
             <!--
             TODO:
-            PROBABLY POST MAPPING WILL NOT BE NEEDED BECAUSE ONCE THE EXAMINATION IS DONE AND THE RESULT IS WRITEN IT CAN BE CHANGED
+            PROBABLY POST MAPPING WILL NOT BE NEEDED BECAUSE ONCE THE EXAMINATION IS DONE AND THE RESULT IS WRITTEN IT CAN NOT BE CHANGED
+            THINK OF IMPLEMENTATION TO GO DIRECTLY TO THE RESULT
              -->
             <div class="modal-footer">
-                <form method="post" th:action="@{/examinations/closed/{id}(id=${examination.id})}">
+                <!--
+                <form method="get" th:action="@{/results/{result}(result=${examination.id})}">
                     <button type="submit" class="btn btn-danger">Result</button>
                 </form>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                -->
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 body {
     background-color: #E4E2DD!important;
     overflow-x: hidden;
-    font-family: 'Open Sans', sans-serif;
+    font-family: Georgia;
     word-wrap: break-word;
 }
 
@@ -46,7 +46,7 @@ body {
 .sidebarblock h3 {
     color: #363838;
     font-size: 14px;
-    font-family: 'Open Sans Bold', sans-serif;
+    font-family: Georgia;
     margin: 0;
     padding: 20px;
 }
@@ -60,7 +60,7 @@ body {
 ul.cats li a {
     font-size: 14px;
     color: #363838;
-    font-family: 'Open Sans Light', sans-serif;
+    font-family: Georgia;
     line-height: 30px;
 }
 
@@ -68,7 +68,7 @@ ul.cats .badge {
     background-color: #bdc3c7;
     font-size: 12px;
     color: #ffffff;
-    font-family: 'Open Sans Bold', sans-serif;
+    font-family: Georgia;
     margin-top: 7px;
 }
 
@@ -127,5 +127,3 @@ a {
 .home-page  {
     text-shadow: 2px 2px 2px grey, 2px 2px 2px grey, 2px 2px 2px grey, 2px 2px 2px grey;
 }
-
-.

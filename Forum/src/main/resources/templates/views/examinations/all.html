@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg-8">
 
-            <!-- RENDER POSTS -->
+            <!-- RENDER EXAMINATIONS -->
             <th:block th:each="examination : ${viewModel}">
                 <th:block th:include="~{fragments/examinations/all/single-examination}"/>
             </th:block>
@@ -12,7 +12,7 @@
                 <th:block th:include="~{fragments/examinations/all/pagination}"/>
             </div>
 
-            <!-- MESSAGE FOR MISSING POSTS-->
+            <!-- MESSAGE FOR MISSING EXAMINATIONS-->
             <th:block th:include="~{fragments/examinations/all/message}"/>
 
         </div>

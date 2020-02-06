@@ -10,12 +10,12 @@
                         <h5 th:text="${ward.wardName}" class="mb-1"></h5>
                     </div>
                     <p th:text="${ward.roomNumber}" class="mb-1"></p>
-                    <small class="text-muted">Can add something here.</small>
+                    <small class="text-muted" th:text="#{ward.make.appointment}"></small>
                 </a>
             </div>
         </th:block>
     </div>
     <div th:unless="${#sets.size(viewModel) > 0}">
-        <h4 class="text-secondary">There are no wards yet. Consider creating one yourself by logging in as administrator.</h4>
+        <h4 class="text-secondary" th:text="#{ward.no.existing}"></h4>
     </div>
 </div>

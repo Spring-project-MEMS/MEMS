@@ -6,11 +6,14 @@
             <div class="list-group">
                 <a th:href="@{/results/{result}(result=${result.id})}" class="list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-between">
-                        <h5 th:text="${result.ward.wardName}" class="mb-1"></h5>
-                        <h5 th:text="|${result.patient.firstName} ${result.patient.lastName}|" class="mb-1 pull-right"></h5>
+                        <h4 th:text="${result.ward.wardName}" class="mb-1"></h4>
+                        <p th:text="|${result.patient.firstName} ${result.patient.lastName}|" class="mb-1 pull-right"></p>
                     </div>
 
-                    <p th:text="${result.date}" class="mb-1"></p>
+                    <div class="d-flex w-100 justify-content-between">
+                        <p th:text="${result.date}" class="mb-1"></p>
+                        <small class="text-muted pull-right" th:text="${result.patient.egn}"></small>
+                    </div>
 
                     <!--
                     NEED TO ADD FIRST AND LAST NAME OF THE PATIENT WHICH TO DIRECT TO THE PATIENT CARTON
@@ -20,8 +23,9 @@
                     </a>
                     -->
 
-                    <small class="text-muted" th:text="${result.description}"></small>
-                    <small class="text-muted pull-right" th:text="${result.patient.egn}"></small>
+                    <div class="d-flex w-100 justify-content-between">
+                        <small class="text-muted" th:text="${result.description}"></small>
+                    </div>
                 </a>
             </div>
         </th:block>

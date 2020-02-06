@@ -11,10 +11,10 @@
                 <p>Are you sure you would like to start this examination?</p>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
                 <form method="post" th:action="@{/examinations/open/{id}(id=${examination.id})}">
-                    <button type="submit" class="btn btn-danger">Start</button>
+                    <button type="submit" class="btn btn-outline-success">Start</button>
                 </form>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

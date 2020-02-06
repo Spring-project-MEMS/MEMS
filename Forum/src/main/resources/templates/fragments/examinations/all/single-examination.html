@@ -1,6 +1,7 @@
 <div class="bg-white rounded mb-3 p-3 row">
     <div class="col-12">
         <div class="d-flex justify-content-between">
+            <h4 class="mt-0" th:text="${examination.ward.wardName}"></h4>
             <h4 class="mt-0" th:text="${examination.date}"></h4>
             <h4 class="mt-0" th:text="${examination.time}"></h4>
             <th:block sec:authorize="!isAnonymous() and !hasAuthority('PATIENT')">
@@ -8,22 +9,21 @@
                     <i class="fa fal fa-arrow-circle-right text-light-green"></i>
                 </a>
             </th:block>
-            <th:block sec:authorize="!isAnonymous() and hasAuthority('PATIENT')">
-                <h4 class="mt-0" th:text="${examination.ward.wardName}"></h4>
-            </th:block>
         </div>
         <hr class="bg-info w-100">
-        <p class="text-wrap" th:text="|EGN: ${examination.patient.egn}|"></p>
     </div>
     <div class="row w-100">
         <div class="col-sm-6 col-md-6 col-lg-6">
-            <i class="p-1 rounded bg-primary text-white" th:text="${examination.status}"></i>
+            <i class="p-1 rounded bg-warning text-white" th:text="${examination.status}"></i>
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6 avatar">
             <a class="pull-right" th:href="|/users/${examination.patient.username}|">
                 <h6 th:text="|${examination.patient.firstName} ${examination.patient.lastName}|" class="text-dark d-inline-block"></h6>
-                <img src="/img/avatar__181424 (2).png" heght="512" width="512" class="d-inline-block"/>
+                <i class="fas fa-user-alt" style="color:black"></i>
             </a>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <h6 class="text-wrap pull-right p-2" th:text="|EGN: ${examination.patient.egn}|"></h6>
         </div>
     </div>
 </div>
