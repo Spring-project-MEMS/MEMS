@@ -20,7 +20,9 @@
             <div class="col-sm-12 col-md-12 col-lg-12">
                 <h5 class="mt-0" th:text="'Description: ' + ${viewModel.description}"></h5>
                 <h6 class="mt-0" th:text="#{result.irm.img}+ ': ' + ${viewModel.img}"></h6>
-                <img src="/img/irm.jpg"/>
+                <!--<img src="/img/irm.jpg"/>-->
+                <img class="img-fluid" th:if="${viewModel.img != null and !#strings.isEmpty(viewModel.img)}"
+                     th:src="${'/uploads/' + viewModel.img}">
             </div>
         </div>
     </div>

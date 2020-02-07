@@ -19,21 +19,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Pattern;
 
 
 @Controller
 @RequestMapping("/results")
 public class ResultController extends BaseController {
+
+    private static final String UPLOADS_DIR = "tmp";
 
     @Value("${result.blood}")
     private String resultBlood;
@@ -75,8 +83,13 @@ public class ResultController extends BaseController {
     }
 
     @PostMapping("/irm")
-    public ModelAndView storeResultIrm(@Valid @ModelAttribute ResultIrmBindingModel resultIrmBindingModel, BindingResult bindingResult, Authentication authentication){
-
+    public ModelAndView storeResultIrm(@Valid @ModelAttribute ResultIrmBindingModel resultIrmBindingModel, BindingResult bindingResult, @RequestParam("file") MultipartFile file, Authentication authentication){
+        if (!file.isEmpty() && file.getOriginalFilename().length() > 0) {
+            if (Pattern.matches("\\w+\\.(jpg|jpeg|bmp|png)", file.getOriginalFilename())) {
+                handleMultipartFile(file);
+                resultIrmBindingModel.setImg(file.getOriginalFilename());
+            }
+        }
         this.resultIrmService.createResultIrm(resultIrmBindingModel);
         return super.redirect("/examinations/pending");
     }
@@ -100,6 +113,21 @@ public class ResultController extends BaseController {
         }
         else{
             return super.redirect("/results");
+        }
+    }
+
+    private void handleMultipartFile(MultipartFile file) {
+        try {
+            File currentDir = new File(UPLOADS_DIR);
+            if(!currentDir.exists()) {
+                currentDir.mkdirs();
+            }
+            String path = currentDir.getAbsolutePath() + "/" + file.getOriginalFilename();
+            path = new File(path).getAbsolutePath();
+            File f = new File(path);
+            FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(f));
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 }

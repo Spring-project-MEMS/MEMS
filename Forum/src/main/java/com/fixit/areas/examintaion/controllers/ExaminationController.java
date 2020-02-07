@@ -5,7 +5,9 @@ import com.fixit.areas.examintaion.enitities.Examination;
 import com.fixit.areas.examintaion.models.service.ExaminationServiceModel;
 import com.fixit.areas.examintaion.models.view.ExaminationViewModel;
 import com.fixit.areas.examintaion.services.ExaminationService;
+import com.fixit.areas.result.models.binding.ResultIrmBindingModel;
 import com.fixit.areas.users.services.UsersService;
+import com.fixit.areas.ward.models.binding.WardBindingModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,10 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -91,7 +90,7 @@ public class ExaminationController extends BaseController {
     }
 
     @GetMapping("/pending")
-    public ModelAndView allPendingExamination(@PageableDefault(size = 10) Pageable pageable, Authentication authentication){
+    public ModelAndView allPendingExamination(@PageableDefault(size = 10) Pageable pageable, @ModelAttribute ResultIrmBindingModel irm, Authentication authentication){
 
         Page<ExaminationServiceModel> examinationServiceModels = this.examinationService.findAllPending(authentication, pageable);
 

@@ -12,34 +12,34 @@
                     <p>Enter result for this examination:</p>
 
                     <label for="description" th:text="#{result.description}"></label>
-                    <input type="text" class="form-control" id="description" name="description"/>
+                    <input type="text" class="form-control" id="description" name="description" required/>
 
                     <label for="wbc" th:text="#{result.blood.wbc}"></label>
-                    <input type="text" class="form-control" id="wbc" name="wbc"/>
+                    <input type="text" class="form-control" id="wbc" name="wbc" required/>
 
                     <label for="rbc" th:text="#{result.blood.rbc}"></label>
-                    <input type="text" class="form-control" id="rbc" name="rbc"/>
+                    <input type="text" class="form-control" id="rbc" name="rbc" required/>
 
                     <label for="hb" th:text="#{result.blood.hb}"></label>
-                    <input type="text" class="form-control" id="hb" name="hb"/>
+                    <input type="text" class="form-control" id="hb" name="hb" required/>
 
                     <label for="hct" th:text="#{result.blood.hct}"></label>
-                    <input type="text" class="form-control" id="hct" name="hct"/>
+                    <input type="text" class="form-control" id="hct" name="hct" required/>
 
                     <label for="mcv" th:text="#{result.blood.mcv}"></label>
-                    <input type="text" class="form-control" id="mcv" name="mcv"/>
+                    <input type="text" class="form-control" id="mcv" name="mcv" required/>
 
                     <label for="plt" th:text="#{result.blood.plt}"></label>
-                    <input type="text" class="form-control" id="plt" name="plt"/>
+                    <input type="text" class="form-control" id="plt" name="plt" required/>
 
                     <label for="sue" th:text="#{result.blood.sue}"></label>
-                    <input type="text" class="form-control" id="sue" name="sue"/>
+                    <input type="text" class="form-control" id="sue" name="sue" required/>
 
                     <label for="ast" th:text="#{result.blood.ast}"></label>
-                    <input type="text" class="form-control" id="ast" name="ast"/>
+                    <input type="text" class="form-control" id="ast" name="ast" required/>
 
                     <label for="alt" th:text="#{result.blood.alt}"></label>
-                    <input type="text" class="form-control" id="alt" name="alt"/>
+                    <input type="text" class="form-control" id="alt" name="alt" required/>
 
                     <input type="hidden" name="date" th:value="${examination.date}"/>
                     <input type="hidden" name="time" th:value="${examination.time}"/>

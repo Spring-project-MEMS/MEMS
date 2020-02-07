@@ -7,16 +7,21 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" th:action="@{/results/irm}" th:object="${resultIrmBindingModel}">
+            <form method="post" th:action="@{/results/irm}" th:object="${resultIrmBindingModel}" enctype="multipart/form-data">
                 <div class="modal-body">
                     <p>Enter result for this examination:</p>
 
                     <label for="description" th:text="#{result.description}"></label>
-                    <input type="text" class="form-control" id="description" name="description"/>
-
-                    <label for="img" th:text="#{result.irm.img}"></label>
-                    <input type="text" class="form-control" id="img" name="img"/>
-
+                    <input type="text" class="form-control" id="description" name="description" required/>
+                    <label for="file" th:text="#{result.irm.img}"></label>
+                    <div class="col-sm-13">
+                        <div class="custom-file">
+                            <!--with input like text bug don't show when file is choosen-->
+                            <!--<input type="file" id="file" name="file" class="custom-file-input" th:value="*{img}" required/>-->
+                            <!--<label th:text="${#strings.isEmpty(resultIrmBindingModel.img)}? 'Choose file' : *{img}" class="custom-file-label" for="file">Choose picture file</label>-->
+                            <input type="file" id="file" name="file" required/>
+                        </div>
+                    </div>
                     <input type="hidden" name="date" th:value="${examination.date}"/>
                     <input type="hidden" name="time" th:value="${examination.time}"/>
                     <input type="hidden" name="patient" th:value="${examination.patient.username}"/>
