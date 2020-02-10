@@ -4,6 +4,8 @@ import com.fixit.areas.result.services.ResultIrmService;
 import com.fixit.areas.result.services.ResultService;
 import com.fixit.areas.role.models.service.RoleServiceModel;
 import com.fixit.areas.role.services.RoleService;
+import com.fixit.areas.users.models.service.UsersServiceModel;
+import com.fixit.areas.users.repositories.UsersRepository;
 import com.fixit.areas.users.services.UsersService;
 import com.fixit.areas.ward.models.view.WardNamesViewModel;
 import com.fixit.areas.ward.services.WardService;
@@ -20,6 +22,7 @@ import java.util.List;
 @Component
 public class DataLoader implements ApplicationRunner {
 
+    private UsersRepository usersRepository;
     private final UsersService usersService;
     private final RoleService roleService;
     private final WardService wardService;
@@ -28,7 +31,8 @@ public class DataLoader implements ApplicationRunner {
     private final ResultIrmService resultIrmService;
 
     @Autowired
-    public DataLoader(UsersService usersService, RoleService roleService, WardService wardService, ResultService resultService, ResultBloodService resultBloodService, ResultIrmService resultIrmService) {
+    public DataLoader(UsersRepository usersRepository, UsersService usersService, RoleService roleService, WardService wardService, ResultService resultService, ResultBloodService resultBloodService, ResultIrmService resultIrmService) {
+        this.usersRepository = usersRepository;
         this.usersService = usersService;
         this.roleService = roleService;
         this.wardService = wardService;
@@ -57,6 +61,19 @@ public class DataLoader implements ApplicationRunner {
             RoleServiceModel roleServiceModel = new RoleServiceModel();
             roleServiceModel.setAuthority("DOCTOR");
             this.roleService.addRole(roleServiceModel);
+        }
+
+        if(usersRepository.findAll().size() == 0){
+            UsersServiceModel usersServiceModel = new UsersServiceModel();
+            usersServiceModel.setUsername("admin");
+            usersServiceModel.setPassword("admin");
+            usersServiceModel.setRoleName("ADMIN");
+            usersServiceModel.setFirstName("Admin");
+            usersServiceModel.setLastName("Admin");
+            usersServiceModel.setEmail("admin@gmail.com");
+            usersServiceModel.setEgn("00000000");
+            usersServiceModel.setWard(null);
+            usersService.createUser(usersServiceModel);
         }
 
         List<WardNamesViewModel> wardNames = new ArrayList<>();
